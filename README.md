@@ -1,37 +1,25 @@
 # CodingEasier
 
 #### 介绍
-一个提高开发效率的idea插件
+一个提高开发效率的idea插件，初衷就是将一些常用的功能写入到这个插件，提高编码效率。因为这方面的文档实在匮乏，后期将会根据情况慢慢加入更多的功能，
+当然也欢迎提交反馈，要是有想要实现的功能也可以留言，要是建议确实不错，就会尝试添加。
 
-#### 软件架构
-软件架构说明
-
+#### 当前功能 
+- 谷歌中英互译（根据选中的内容自动辨别）
+- 翻译及便捷替换
+- 字符串相关操作
 
 #### 安装教程
 
-1. xxxx
-2. xxxx
-3. xxxx
+1. 本地安装     
+`File-->Settings-->Plugins--> Install Plugin From Disk...`
+2. 在线安装     
+在`File-->Settings-->Plugins`中直接搜索`Coding Easier`安装
+
+安装完毕以后重启即可
 
 #### 使用说明
 
 1. xxxx
 2. xxxx
 3. xxxx
-
-#### 参与贡献
-
-1. Fork 本仓库
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
-
-
-#### 码云特技
-
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. 码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5. 码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6. 码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)

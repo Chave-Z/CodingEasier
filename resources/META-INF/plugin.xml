@@ -1,0 +1,73 @@
+<idea-plugin>
+    <id>com.cheng.plugin.coding.easier</id>
+    <name>Coding Easier</name>
+    <version>0.0.1</version>
+    <vendor email="chave_Z@163.com" url=" https://github.com/Chave-Z">D丶Cheng</vendor>
+
+    <description>><![CDATA[
+            A plugin that improves coding efficiency
+        ]]></description>
+
+    <change-notes><![CDATA[
+          1. Translate and replace word<br>
+          2. String utils<br>
+        ]]>
+</change-notes>
+    <!--<em>most HTML tags may be used</em>-->
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="162.0"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <group id="CodingEasier.Code.Group" text="CodingEasier"
+               description="CodingEasier"
+               popup="true">
+            <add-to-group group-id="EditMenu" anchor="last"/>
+            <action id="CodingEasier.Group.Translate"
+                    class="com.coding.easier.translate.GoogleTranslateAction"
+                    text="Translate"
+                    description="Translate">
+            </action>
+            <action id="CodingEasier.Group.Replace"
+                    class="com.coding.easier.translate.GoogleReplaceAction"
+                    text="Translate And Replace"
+                    description="Translate And Replace...">
+            </action>
+            <action id="CodingEasier.Group.CreateConstant"
+                    class="com.coding.easier.string.CreateConstantAction"
+                    text="Create a Constant"
+                    description="Create a Constant">
+            </action>
+            <group id="CodingEasier.Group.SwitchCase" text="Switch Case..."
+                   description="Group of String manipulation Switch case actions"
+                   popup="true">
+                <separator/>
+                <action id="CodingEasier.Group.SwitchCase.ToConstant"
+                        class="com.coding.easier.string.ToConstantAction"
+                        text="To Constant"
+                        description="String To Constant">
+                </action>
+            </group>
+            <separator/>
+        </group>
+        <group id="CodingEasier.EditorPopupMenu" text="Coding Easier"
+               description="Coding Easier plugin"
+               popup="false">
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorToggleColumnMode"/>
+            <separator/>
+            <reference ref="CodingEasier.Code.Group"></reference>
+        </group>
+    </actions>
+
+</idea-plugin>
