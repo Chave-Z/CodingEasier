@@ -27,7 +27,7 @@
 #### 安装教程
 
 1. 本地安装     
-`File-->Settings-->Plugins--> Install Plugin From Disk...`
+`File-->Settings-->Plugins--> Install Plugin From Disk... -->选择CodingEasier.jar-->确定`
 2. 在线安装(等初版差不多了，有时间就去提交一下)
 
 安装完毕以后重启即可
