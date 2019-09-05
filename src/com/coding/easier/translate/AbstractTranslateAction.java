@@ -3,6 +3,7 @@ package com.coding.easier.translate;
 import com.coding.easier.util.NoticeUtil;
 import com.coding.easier.util.GsonUtil;
 import com.coding.easier.constant.TranslateConstant;
+import com.coding.easier.util.StringUtil;
 import com.coding.easier.util.TkTools;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -34,6 +35,8 @@ public abstract class AbstractTranslateAction extends AnAction {
 
     public static final Pattern p = compile("[\u4e00-\u9fa5]");
 
+    private final static CharSequence UNDERSCORE = "_";
+
     public static Editor editor;
     public static Project project;
 
@@ -43,6 +46,7 @@ public abstract class AbstractTranslateAction extends AnAction {
             SelectionModel selectionModel = editor.getSelectionModel();
             String selectedText = selectionModel.getSelectedText();
             if (StringUtils.isBlank(selectedText)) {
+                NoticeUtil.error("请选择要翻译的字符");
                 return;
             }
             NoticeUtil.init(this.getClass().getSimpleName(), 1);
@@ -67,39 +71,11 @@ public abstract class AbstractTranslateAction extends AnAction {
      */
     public void executeTranslate(AnActionEvent event) {
         final SelectionModel selectionModel = editor.getSelectionModel();
-        String selectText = resolveText(selectionModel.getSelectedText());
+        String selectText = StringUtil.textToWords(selectionModel.getSelectedText());
         if (null != selectText && !"".equals(selectText.trim())) {
-            selectText = selectText.replaceAll("\r|\n|/|\\*", "").trim();
             doTranslate(selectText);
         }
     }
-
-    /**
-     * 解析选中的单词
-     * 全大写 --> 小写
-     * 驼峰   --> 全小写 空格分隔
-     * 下划线 --> 全小写 下换线 转空格
-     *
-     * @param selectedText
-     * @return
-     */
-    protected static String resolveText(String selectedText) {
-        if (StringUtils.isAllUpperCase(selectedText)) {
-            return selectedText.toLowerCase();
-        }
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0, len = selectedText.length(); i < len; i++) {
-            if (selectedText.charAt(i) >= 'A' && selectedText.charAt(i) <= 'Z') {
-                stringBuilder.append(" ").append((char) (selectedText.charAt(i) + 32));
-            } else if (selectedText.charAt(i) == '_') {
-                stringBuilder.append(" ");
-            } else {
-                stringBuilder.append(selectedText.charAt(i));
-            }
-        }
-        return stringBuilder.toString();
-    }
-
 
     /**
      * 调用接口,翻译并返回值

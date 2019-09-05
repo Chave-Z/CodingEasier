@@ -53,7 +53,7 @@ public class NoticeUtil {
     public static void error(final String text) {
         Messages.showMessageDialog(
                 text,
-                "异常",
+                "错误",
                 Messages.getInformationIcon()
         );
     }

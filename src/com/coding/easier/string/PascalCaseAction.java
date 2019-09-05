@@ -4,12 +4,12 @@ import com.coding.easier.util.StringUtil;
 
 /**
  * @author D丶Cheng
- * @description 普通字符串转换常量
+ * @description 普通字符串转换大驼峰
  */
-public class ToConstantAction extends AbstractStringAction {
+public class PascalCaseAction extends AbstractStringAction {
 
     @Override
     protected String transformStr(String selectedText) {
-        return StringUtil.toConstant(selectedText);
+        return StringUtil.textToCamelCase(selectedText, true);
     }
 }

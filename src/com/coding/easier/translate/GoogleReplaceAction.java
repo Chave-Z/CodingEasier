@@ -14,8 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.regex.Matcher;
 
 /**
@@ -35,7 +34,7 @@ public class GoogleReplaceAction extends AbstractTranslateAction {
                 return;
             }
             showPopupBalloon(googleTranslateResult, translateType);
-//            Logger.info(translateType, googleTranslateResult.toString());
+            NoticeUtil.info(translateType, googleTranslateResult.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -47,21 +46,29 @@ public class GoogleReplaceAction extends AbstractTranslateAction {
             @Override
             public void run() {
                 final JBPopupFactory factory = JBPopupFactory.getInstance();
-                List<String> list = new ArrayList<>();
+                LinkedHashSet<String> set = new LinkedHashSet<>();
                 String text;
                 if (result.getDict() == null) {
                     text = result.getSentences().get(0).getTrans();
-                    addWord(list, text, translateType);
+                    set.add(text + "    ");
                 } else {
                     for (GoogleTranslateResult.DictBean dictBean : result.getDict()) {
                         for (GoogleTranslateResult.DictBean.EntryBean entryBean : dictBean.getEntry()) {
                             text = entryBean.getWord();
-                            addWord(list, text, translateType);
+                            set.add(text + "    ");
                         }
                     }
                 }
-                JList jList = new JList(list.toArray());
+                LinkedHashSet<String> candidateWords = new LinkedHashSet<>();
+                // 填充结果
+                for (String s : set) {
+                    addWord(candidateWords, s.trim(), translateType);
+                }
+                set.addAll(candidateWords);
+                JLabel jLabel = new JLabel("请选择需要的结果    ");
+                JList jList = new JList(set.toArray());
                 JPanel panel = new JPanel(new BorderLayout());
+                panel.add(jLabel, BorderLayout.NORTH);
                 panel.add(jList, BorderLayout.CENTER);
                 factory.createComponentPopupBuilder(panel, jList).createPopup().show(factory.guessBestPopupLocation(editor));
                 jList.addMouseListener(new MouseAdapter() {
@@ -81,19 +88,13 @@ public class GoogleReplaceAction extends AbstractTranslateAction {
     /**
      * 将可能需要的单词添加到候选list中
      *
-     * @param list
+     * @param set
      * @param text
      * @param translateType
      */
-    private void addWord(List<String> list, String text, String translateType) {
+    private void addWord(LinkedHashSet<String> set, String text, String translateType) {
         if (TranslateConstant.ZH_CN_TO_EN.equals(translateType) && text.contains(" ")) {
-            list.add("  " + text + "    ");
-            list.add("  " + StringUtil.toConstant(text) + "    ");
-            text = text.trim().toLowerCase();
-            list.add("  " + StringUtil.blankToUnderscoreCase(text) + "    ");
-            list.add("  " + StringUtil.blankToCamelCase(text) + "    ");
-        } else {
-            list.add("  " + text + "    ");
+            set.addAll(StringUtil.getAllTranslateCase(text));
         }
     }
 

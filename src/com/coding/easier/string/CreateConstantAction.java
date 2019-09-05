@@ -13,7 +13,7 @@ public class CreateConstantAction extends AbstractStringAction {
 
     @Override
     protected String transformStr(String selectedText) {
-        String constant = StringUtil.toConstant(selectedText);
+        String constant = StringUtil.textToConstant(selectedText);
         return String.format(CONSTANT_MODAL, constant, selectedText);
     }
 }

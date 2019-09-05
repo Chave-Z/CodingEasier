@@ -1,10 +1,6 @@
 package com.coding.easier.util;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.regex.Matcher;
-
-import static java.util.regex.Pattern.*;
+import java.util.*;
 
 /**
  * @author: D丶Cheng
@@ -18,106 +14,148 @@ public class StringUtil {
     /**
      * 字符串转换成常量
      *
-     * @param s
+     * @param str
      * @return
      */
-    public static String toConstant(String s) {
-        if (StringUtils.isBlank(s)) {
-            return "";
+    public static String textToConstant(String str) {
+        return textToWords(str).replaceAll("\\s+", "_").toUpperCase();
+    }
+
+    /**
+     * 单词转下划线命名
+     *
+     * @param str
+     * @return
+     */
+    public static String textToUnderscoreCase(String str) {
+        return textToWords(str).replaceAll("\\s+", "_");
+    }
+
+    /**
+     * 单词转短横线命名
+     *
+     * @param str
+     * @return
+     */
+    public static String textToKebabCase(String str, boolean isUpperKebab) {
+        str = textToWords(str).replaceAll("\\s+", "-");
+        if (isUpperKebab) {
+            str = ((char) (str.charAt(0) - 32)) + str.substring(1);
         }
-        s = s.replaceAll("\\s+", "_");
+        return str;
+    }
+
+    /**
+     * 单词转大小驼峰命名
+     *
+     * @param str
+     * @param isUpperCamel true 大驼峰 false 小驼峰
+     * @return
+     */
+    public static String textToCamelCase(String str, boolean isUpperCamel) {
+        str = textToWords(str);
         StringBuilder stringBuilder = new StringBuilder();
-        char previousChar = ' ';
+        char[] chars = str.toCharArray();
+        for (int i = 0, len = chars.length; i < len; i++) {
+            if (i == 0 && isUpperCamel) {
+                stringBuilder.append(Character.toUpperCase(chars[i]));
+                continue;
+            }
+            if (chars[i] == ' ') {
+                stringBuilder.append(Character.toUpperCase(chars[++i]));
+            } else {
+                stringBuilder.append(chars[i]);
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 拆分单词
+     *
+     * @param str
+     * @return
+     */
+    public static String textToWords(String str) {
+        //selectText  select Text select_text select_Text SELECT_TEXT
+        str = str.replaceAll("[-|_|\\s|\n|\r]+", " ");
+        if (isAllUpperCase(str, ' ')) {
+            return str.toLowerCase();
+        }
         char c;
-        for (int i = 0, len = s.length(); i < len; i++) {
-            c = s.charAt(i);
-            if (i != 0 && i + 1 < s.length() && Character.isUpperCase(c) && Character.isLowerCase(s.charAt(i + 1))) {
-                stringBuilder.append("_").append(c);
+        char previousChar = ' ';
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0, len = str.length(); i < len; i++) {
+            c = str.charAt(i);
+            if (i != 0 && i + 1 < str.length() && Character.isUpperCase(c) && Character.isLowerCase(str.charAt(i + 1))) {
+                stringBuilder.append(" ").append(c);
             } else if (Character.isLowerCase(previousChar) && Character.isUpperCase(c)) {
-                stringBuilder.append("_").append(c);
+                stringBuilder.append(" ").append(c);
             } else {
                 stringBuilder.append(c);
             }
             previousChar = c;
         }
-        return stringBuilder.toString().toUpperCase();
+        return stringBuilder.toString().trim().toLowerCase();
     }
 
     /**
-     * 驼峰格式字符串转换为下划线格式字符串
-     *
-     * @param s
-     * @return
-     */
-    public static String camelToUnderscore(String s) {
-        if (StringUtils.isBlank(s)) {
-            return "";
-        }
-        StringBuilder stringBuilder = new StringBuilder();
-        char c;
-        for (int i = 0, len = s.length(); i < len; i++) {
-            c = s.charAt(i);
-            if (Character.isUpperCase(c)) {
-                stringBuilder.append(UNDERSCORE);
-                stringBuilder.append(Character.toLowerCase(c));
-            } else {
-                stringBuilder.append(c);
-            }
-        }
-        return stringBuilder.toString();
-    }
-
-    /**
-     * 下划线格式字符串转换为驼峰格式
+     * 除了指定字符全是大写
      *
      * @param str
      * @return
      */
-    public static String underscoreToCamel(String str) {
-        if (StringUtils.isBlank(str)) {
-            return "";
-        }
-        StringBuilder stringBuilder = new StringBuilder(str);
-        Matcher mc = compile("_").matcher(str);
-        int i = 0;
-        while (mc.find()) {
-            int position = mc.end() - (i++);
-            stringBuilder.replace(position - 1, position + 1, stringBuilder.substring(position, position + 1).toUpperCase());
-        }
-        return stringBuilder.toString();
-    }
-
-    public static String blankToUnderscoreCase(String str) {
-        if (StringUtils.isBlank(str)) {
-            return "";
-        }
-        char c;
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0, len = str.length(); i < len; i++) {
-            c = str.charAt(i);
-            if (c == ' ') {
-                stringBuilder.append("_");
-            } else {
-                stringBuilder.append(c);
+    private static boolean isAllUpperCase(String str, Character... characters) {
+        char[] chars = str.toCharArray();
+        for (char c : chars) {
+            if (!Character.isUpperCase(c)) {
+                boolean flag = false;
+                for (Character character : characters) {
+                    if (c == character) {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (!flag) {
+                    return false;
+                }
             }
         }
-        return stringBuilder.toString();
+        return true;
     }
 
-    public static String blankToCamelCase(String str) {
-        if (StringUtils.isBlank(str)) {
-            return "";
-        }
-        char c;
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0, len = str.length(); i < len; i++) {
-            c = str.charAt(i);
-            if (c == ' ') {
-                stringBuilder.append((char) (str.charAt(++i) - 32));
-            } else {
-                stringBuilder.append(c);
-            }
-        }
-        return stringBuilder.toString();
+    /**
+     * 获取所有格式的字符串
+     *
+     * @param text
+     * @return
+     */
+    public static LinkedHashSet<String> getAllCase(String text) {
+        LinkedHashSet<String> set = new LinkedHashSet<>();
+        set.add(StringUtil.textToCamelCase(text, false) + "    ");
+        set.add(StringUtil.textToCamelCase(text, true) + "    ");
+        set.add(StringUtil.textToConstant(text) + "    ");
+        set.add(StringUtil.textToUnderscoreCase(text) + "    ");
+        set.add(StringUtil.textToKebabCase(text, false) + "    ");
+        set.add(StringUtil.textToKebabCase(text, true) + "    ");
+        set.add(StringUtil.textToWords(text) + "    ");
+        return set;
+    }
+
+    /**
+     * 获取所有格式的字符串(用于翻译结果)
+     *
+     * @param text
+     * @return
+     */
+    public static Set<String> getAllTranslateCase(String text) {
+        LinkedHashSet<String> set = new LinkedHashSet<>();
+        set.add(StringUtil.textToCamelCase(text, false) + "    ");
+        set.add(StringUtil.textToCamelCase(text, true) + "    ");
+        set.add(StringUtil.textToConstant(text) + "    ");
+        set.add(StringUtil.textToUnderscoreCase(text) + "    ");
+        set.add(StringUtil.textToKebabCase(text, false) + "    ");
+        set.add(StringUtil.textToKebabCase(text, true) + "    ");
+        return set;
     }
 }
