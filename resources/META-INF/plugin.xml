@@ -99,6 +99,17 @@
                         text="to words"
                         description="Text to words">
                 </action>
+                <separator/>
+                <action id="CodingEasier.Group.SwitchCase.UpperCase"
+                        class="com.coding.easier.string.UpperCaseAction"
+                        text="to UpperCase"
+                        description="Text to upperCase">
+                </action>
+                <action id="CodingEasier.Group.SwitchCase.LowerCase"
+                        class="com.coding.easier.string.LowerCaseAction"
+                        text="to LowerCase"
+                        description="Text to lowerCase">
+                </action>
             </group>
             <separator/>
         </group>

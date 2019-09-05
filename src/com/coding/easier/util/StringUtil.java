@@ -139,6 +139,8 @@ public class StringUtil {
         set.add(StringUtil.textToKebabCase(text, false) + "    ");
         set.add(StringUtil.textToKebabCase(text, true) + "    ");
         set.add(StringUtil.textToWords(text) + "    ");
+        set.add(text.toUpperCase() + "    ");
+        set.add(text.toLowerCase() + "    ");
         return set;
     }
 
