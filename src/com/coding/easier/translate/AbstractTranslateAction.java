@@ -52,7 +52,7 @@ public abstract class AbstractTranslateAction extends AnAction {
             NoticeUtil.init(this.getClass().getSimpleName(), 1);
             executeTranslate(event);
         } catch (Exception e) {
-            NoticeUtil.error(getStackTrace(e));
+            NoticeUtil.error(e);
         }
     }
 
@@ -104,26 +104,6 @@ public abstract class AbstractTranslateAction extends AnAction {
             return translateResult;
         }
         return null;
-    }
-
-    /**
-     * 用e.getMessage()来获取异常信息，
-     * 但是这样获取到的信息内容并不全，而且有时候为空。
-     * 我们可以用下面方法来获取
-     *
-     * @param throwable
-     * @return
-     */
-    public static String getStackTrace(Throwable throwable) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-
-        try {
-            throwable.printStackTrace(pw);
-            return sw.toString();
-        } finally {
-            pw.close();
-        }
     }
 
 

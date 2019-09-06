@@ -53,6 +53,11 @@
                     description="Create a Constant">
                 <keyboard-shortcut keymap="$default" first-keystroke="alt shift Z"/>
             </action>
+            <action id="CodingEasier.Group.Format"
+                    class="com.coding.easier.format.FormatAction"
+                    text="format"
+                    description="Format">
+            </action>
             <group id="CodingEasier.Group.SwitchCase" text="Switch Case..."
                    description="Group of String manipulation Switch case actions"
                    popup="true">
