@@ -22,7 +22,6 @@ public class GoogleTranslateAction extends AbstractTranslateAction {
     protected void doTranslate(String selectText) {
         Matcher m = p.matcher(selectText.trim());
         String translateType = m.find() ? TranslateConstant.ZH_CN_TO_EN : TranslateConstant.EN_TO_ZH_CN;
-        String result = null;
         try {
             GoogleTranslateResult googleTranslateResult = translate(selectText, translateType, editor);
             if (googleTranslateResult == null) {

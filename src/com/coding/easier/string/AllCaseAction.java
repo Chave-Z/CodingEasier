@@ -71,14 +71,11 @@ public class AllCaseAction extends AnAction {
             public void run() {
                 final JBPopupFactory factory = JBPopupFactory.getInstance();
                 LinkedHashSet<String> set = getAllCase(selectedText);
-                JLabel jLabel = new JLabel("请选择需要的格式    ");
-//                java.util.List list = new ArrayList();
-//                list.addAll(set);
-//                factory.createPopupChooserBuilder(list).createPopup().show(factory.guessBestPopupLocation(editor));
                 JList jList = new JList(set.toArray());
+                JScrollPane scrollPane = new JScrollPane(jList);
+                scrollPane.setPreferredSize(new Dimension(170, 0));
                 JPanel panel = new JPanel(new BorderLayout());
-                panel.add(jLabel, BorderLayout.NORTH);
-                panel.add(jList, BorderLayout.CENTER);
+                panel.add(scrollPane, BorderLayout.CENTER);
                 factory.createComponentPopupBuilder(panel, jList).createPopup().show(factory.guessBestPopupLocation(editor));
                 jList.addMouseListener(new MouseAdapter() {
                     @Override
@@ -86,7 +83,7 @@ public class AllCaseAction extends AnAction {
                         if (e.getClickCount() == 2) {
                             System.out.println(jList.getSelectedValue());
                             final SelectionModel selectionModel = editor.getSelectionModel();
-                            replaceStr(project, editor, selectionModel, jList.getSelectedValue().toString().trim());
+                            replaceStr(project, editor, selectionModel, jList.getSelectedValue().toString());
                         }
                     }
                 });

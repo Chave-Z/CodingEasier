@@ -132,15 +132,15 @@ public class StringUtil {
      */
     public static LinkedHashSet<String> getAllCase(String text) {
         LinkedHashSet<String> set = new LinkedHashSet<>();
-        set.add(StringUtil.textToCamelCase(text, false) + "    ");
-        set.add(StringUtil.textToCamelCase(text, true) + "    ");
-        set.add(StringUtil.textToConstant(text) + "    ");
-        set.add(StringUtil.textToUnderscoreCase(text) + "    ");
-        set.add(StringUtil.textToKebabCase(text, false) + "    ");
-        set.add(StringUtil.textToKebabCase(text, true) + "    ");
-        set.add(StringUtil.textToWords(text) + "    ");
-        set.add(text.toUpperCase() + "    ");
-        set.add(text.toLowerCase() + "    ");
+        set.add(StringUtil.textToCamelCase(text, false));
+        set.add(StringUtil.textToCamelCase(text, true));
+        set.add(StringUtil.textToConstant(text));
+        set.add(StringUtil.textToUnderscoreCase(text));
+        set.add(StringUtil.textToKebabCase(text, false));
+        set.add(StringUtil.textToKebabCase(text, true));
+        set.add(StringUtil.textToWords(text));
+        set.add(text.toUpperCase());
+        set.add(text.toLowerCase());
         return set;
     }
 
@@ -152,12 +152,12 @@ public class StringUtil {
      */
     public static Set<String> getAllTranslateCase(String text) {
         LinkedHashSet<String> set = new LinkedHashSet<>();
-        set.add(StringUtil.textToCamelCase(text, false) + "    ");
-        set.add(StringUtil.textToCamelCase(text, true) + "    ");
-        set.add(StringUtil.textToConstant(text) + "    ");
-        set.add(StringUtil.textToUnderscoreCase(text) + "    ");
-        set.add(StringUtil.textToKebabCase(text, false) + "    ");
-        set.add(StringUtil.textToKebabCase(text, true) + "    ");
+        set.add(StringUtil.textToCamelCase(text, false));
+        set.add(StringUtil.textToCamelCase(text, true));
+        set.add(StringUtil.textToConstant(text));
+        set.add(StringUtil.textToUnderscoreCase(text));
+        set.add(StringUtil.textToKebabCase(text, false));
+        set.add(StringUtil.textToKebabCase(text, true));
         return set;
     }
 }

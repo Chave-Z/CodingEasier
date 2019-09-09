@@ -275,15 +275,21 @@ public class GoogleTranslateResult {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        SentencesBean sentencesBean = sentences.get(0);
-        stringBuilder.append(sentencesBean).append("\n");
-        if (!sentencesBean.getOrig().equals(sentencesBean.getTrans()) && dict != null) {
-            for (int i = 0, len = dict.size(); i < len; i++) {
-                stringBuilder.append(dict.get(i));
+        if (sentences.size() == 1) {
+            StringBuilder stringBuilder = new StringBuilder();
+            SentencesBean sentencesBean = sentences.get(0);
+            stringBuilder.append(sentencesBean).append("\n");
+            if (!sentencesBean.getOrig().equals(sentencesBean.getTrans()) && dict != null) {
+                for (int i = 0, len = dict.size(); i < len; i++) {
+                    stringBuilder.append(dict.get(i));
+                }
             }
+            return stringBuilder.toString();
+        }else{
+
+            return "";
         }
-        return stringBuilder.toString();
+
     }
 
     public static void main(String[] args) {
