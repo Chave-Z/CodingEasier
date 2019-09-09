@@ -1,6 +1,7 @@
 package com.coding.easier.util;
 
 import com.google.gson.*;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
  * @author: D丶Cheng
@@ -17,7 +18,7 @@ public class GsonUtil {
     }
 
     public static String toPrettyFormat(String json) {
-        json = json.trim();
+        json = StringEscapeUtils.unescapeJava(json.trim());
         JsonParser jsonParser = new JsonParser();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         if (json.startsWith("[")) {

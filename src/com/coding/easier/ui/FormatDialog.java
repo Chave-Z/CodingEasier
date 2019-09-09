@@ -21,23 +21,24 @@ public class FormatDialog extends JDialog {
     private final FormatAction formatAction;
     private final Editor editor;
 
-    public JPanel contentPane;
+    public JPanel contentPanel;
     private JButton formatBtn;
     private JComboBox comboBox;
-    public JTextArea textArea;
-//    private JButton compressBtn;
+    private JTextPane textPanel;
+    private JPanel centerPanel;
 
     private String selectedType = FormatEnum.JSON.getValue();
 
     public FormatDialog(FormatAction formatAction, Editor editor) {
         this.formatAction = formatAction;
         this.editor = editor;
-        textArea.setFont(new Font("Serif", 1, 14));
-        setContentPane(contentPane);
+        textPanel.setFont(new Font("Serif", 1, 14));
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        setContentPane(contentPanel);
         setModal(true);
         getRootPane().setDefaultButton(formatBtn);
         comboBox.addItem(FormatEnum.JSON.getValue());
-        comboBox.addItem(FormatEnum.XML.getValue());
+//        comboBox.addItem(FormatEnum.XML.getValue());
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         initListener();
@@ -53,13 +54,13 @@ public class FormatDialog extends JDialog {
         formatBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (StringUtils.isBlank(textArea.getText())) {
+                if (StringUtils.isBlank(textPanel.getText())) {
                     NoticeUtil.error("请输入数据");
                     return;
                 }
                 String formattedString = "";
                 if (FormatEnum.JSON.getValue().equals(selectedType)) {
-                    formattedString = formatJson(textArea.getText());
+                    formattedString = formatJson(textPanel.getText());
                 } else {
                     NoticeUtil.error("正在开发中...");
                     return;
@@ -67,7 +68,7 @@ public class FormatDialog extends JDialog {
                 if ("".equals(formattedString)) {
                     return;
                 }
-                textArea.setText(formattedString);
+                textPanel.setText(formattedString);
             }
         });
 
@@ -85,7 +86,7 @@ public class FormatDialog extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
+        contentPanel.registerKeyboardAction(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 onCancel();
@@ -120,5 +121,6 @@ public class FormatDialog extends JDialog {
         dialog.setTitle("CodingEasier Format");
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
+        dialog.pack();
     }
 }
