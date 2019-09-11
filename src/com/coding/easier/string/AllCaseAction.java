@@ -73,7 +73,6 @@ public class AllCaseAction extends AnAction {
                 LinkedHashSet<String> set = getAllCase(selectedText);
                 JList jList = new JList(set.toArray());
                 JScrollPane scrollPane = new JScrollPane(jList);
-                scrollPane.setPreferredSize(new Dimension(170, 0));
                 JPanel panel = new JPanel(new BorderLayout());
                 panel.add(scrollPane, BorderLayout.CENTER);
                 factory.createComponentPopupBuilder(panel, jList).createPopup().show(factory.guessBestPopupLocation(editor));

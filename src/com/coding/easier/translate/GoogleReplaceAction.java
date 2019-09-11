@@ -9,6 +9,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
+import com.intellij.util.ui.JBUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -47,27 +48,38 @@ public class GoogleReplaceAction extends AbstractTranslateAction {
             public void run() {
                 final JBPopupFactory factory = JBPopupFactory.getInstance();
                 LinkedHashSet<String> set = new LinkedHashSet<>();
-                String text;
+                StringBuilder text = new StringBuilder();
+                boolean addFlag = true;
                 if (result.getDict() == null) {
-                    text = result.getSentences().get(0).getTrans();
-                    set.add(text);
+                    if (result.getSentences().size() == 1 || result.getSentences().size() == 2) {
+                        text = new StringBuilder(result.getSentences().get(0).getTrans());
+                    } else {
+                        addFlag = false;
+                        for (GoogleTranslateResult.SentencesBean sentence : result.getSentences()) {
+                            if (sentence.getTrans() != null) {
+                                text.append(sentence.getTrans());
+                            }
+                        }
+                    }
+                    set.add(text.toString());
                 } else {
                     for (GoogleTranslateResult.DictBean dictBean : result.getDict()) {
                         for (GoogleTranslateResult.DictBean.EntryBean entryBean : dictBean.getEntry()) {
-                            text = entryBean.getWord();
-                            set.add(text);
+                            text = new StringBuilder(entryBean.getWord());
+                            set.add(text.toString());
                         }
                     }
                 }
-                LinkedHashSet<String> candidateWords = new LinkedHashSet<>();
-                // 填充结果
-                for (String s : set) {
-                    addWord(candidateWords, s.trim(), translateType);
+                if (addFlag) {
+                    LinkedHashSet<String> candidateWords = new LinkedHashSet<>();
+                    // 填充结果
+                    for (String s : set) {
+                        addWord(candidateWords, s.trim(), translateType);
+                    }
+                    set.addAll(candidateWords);
                 }
-                set.addAll(candidateWords);
                 JList jList = new JList(set.toArray());
                 JScrollPane scrollPane = new JScrollPane(jList);
-                scrollPane.setPreferredSize(new Dimension(170, 0));
                 JPanel panel = new JPanel(new BorderLayout());
                 panel.add(scrollPane, BorderLayout.CENTER);
                 factory.createComponentPopupBuilder(panel, jList).createPopup().show(factory.guessBestPopupLocation(editor));

@@ -19,8 +19,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.URLEncoder;
 import java.util.regex.Pattern;
 
@@ -35,15 +33,14 @@ public abstract class AbstractTranslateAction extends AnAction {
 
     public static final Pattern p = compile("[\u4e00-\u9fa5]");
 
-    private final static CharSequence UNDERSCORE = "_";
-
     public static Editor editor;
     public static Project project;
+    public static SelectionModel selectionModel;
 
     @Override
     public void actionPerformed(AnActionEvent event) {
         try {
-            SelectionModel selectionModel = editor.getSelectionModel();
+            selectionModel = editor.getSelectionModel();
             String selectedText = selectionModel.getSelectedText();
             if (StringUtils.isBlank(selectedText)) {
                 NoticeUtil.error("请选择要翻译的字符");
@@ -72,7 +69,7 @@ public abstract class AbstractTranslateAction extends AnAction {
     public void executeTranslate(AnActionEvent event) {
         final SelectionModel selectionModel = editor.getSelectionModel();
         String selectText = StringUtil.textToWords(selectionModel.getSelectedText());
-        if (null != selectText && !"".equals(selectText.trim())) {
+        if (!"".equals(selectText.trim())) {
             doTranslate(selectText);
         }
     }

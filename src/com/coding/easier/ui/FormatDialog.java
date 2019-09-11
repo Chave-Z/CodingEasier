@@ -32,7 +32,7 @@ public class FormatDialog extends JDialog {
     public FormatDialog(FormatAction formatAction, Editor editor) {
         this.formatAction = formatAction;
         this.editor = editor;
-        textPanel.setFont(new Font("Serif", 1, 14));
+        textPanel.setFont(new Font("Microsoft YaHei", Font.BOLD, 14));
         centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setContentPane(contentPanel);
         setModal(true);

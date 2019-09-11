@@ -155,8 +155,13 @@ public class GoogleTranslateResult {
 
         @Override
         public String toString() {
-            return String.format("<span style='font-size:11px;font-weight: bold;'>%s的翻译</span>\n<span style='font-size:13px;font-weight: bold;color: #dcbb3e;'>%s</span>", orig, trans);
+            return orig + "\n" + trans + "\n";
         }
+
+//        @Override
+//        public String toString() {
+//            return String.format("<span style='font-size:11px;font-weight: bold;'>%s的翻译</span>\n<span style='font-size:13px;font-weight: bold;color: #dcbb3e;'>%s</span>", orig, trans);
+//        }
     }
 
     public static class DictBean {
@@ -265,18 +270,28 @@ public class GoogleTranslateResult {
         @Override
         public String toString() {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("<span style='font-size:11px;color: #0c96da;font-weight: bold;color: #33c0c1;'>").append(pos).append("</span>\n");
+            stringBuilder.append("<span style='color: #33c0c1;'>").append(pos).append("</span><br>");
             for (EntryBean entryBean : entry) {
-                stringBuilder.append("<span style='font-size:12px;'>").append(entryBean).append("</span>\n");
+                stringBuilder.append("<span>").append(entryBean).append("</span><br>");
             }
+            System.out.println(stringBuilder.toString());
             return stringBuilder.toString();
         }
+//        @Override
+//        public String toString() {
+//            StringBuilder stringBuilder = new StringBuilder();
+//            stringBuilder.append(pos).append("\n");
+//            for (EntryBean entryBean : entry) {
+//                stringBuilder.append(entryBean).append("\n");
+//            }
+//            return stringBuilder.toString();
+//        }
     }
 
     @Override
     public String toString() {
-        if (sentences.size() == 1) {
-            StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
+        if (sentences.size() == 1 || sentences.size() == 2) {
             SentencesBean sentencesBean = sentences.get(0);
             stringBuilder.append(sentencesBean).append("\n");
             if (!sentencesBean.getOrig().equals(sentencesBean.getTrans()) && dict != null) {
@@ -284,27 +299,29 @@ public class GoogleTranslateResult {
                     stringBuilder.append(dict.get(i));
                 }
             }
-            return stringBuilder.toString();
-        }else{
-
-            return "";
-        }
-
-    }
-
-    public static void main(String[] args) {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
-        Gson gson = gsonBuilder.create();
-        String responseText = "{\"sentences\":[{\"trans\":\"结果\",\"orig\":\"result\",\"backend\":2},{\"translit\":\"Jiéguǒ\",\"src_translit\":\"riˈzəlt\"}],\"dict\":[{\"pos\":\"名词\",\"terms\":[\"结果\",\"成果\",\"效果\",\"成绩\",\"产物\",\"成效\",\"收获\",\"功\",\"名堂\"],\"entry\":[{\"word\":\"结果\",\"reverse_translation\":[\"result\",\"outcome\",\"consequence\",\"effect\",\"consequent\",\"upshot\"],\"score\":0.67663383},{\"word\":\"成果\",\"reverse_translation\":[\"achievement\",\"result\",\"gain\",\"profit\",\"consequent\",\"sequel\"],\"score\":0.02749503},{\"word\":\"效果\",\"reverse_translation\":[\"effect\",\"result\",\"sound effects\",\"consequent\",\"sequel\"],\"score\":0.011642128},{\"word\":\"成绩\",\"reverse_translation\":[\"score\",\"achievement\",\"result\",\"mark\"],\"score\":0.0039610346},{\"word\":\"产物\",\"reverse_translation\":[\"product\",\"result\",\"outcome\"],\"score\":0.0010999396},{\"word\":\"成效\",\"reverse_translation\":[\"effect\",\"result\"],\"score\":6.074443E-4},{\"word\":\"收获\",\"reverse_translation\":[\"gain\",\"result\",\"acquisition\"],\"score\":5.921267E-5},{\"word\":\"功\",\"reverse_translation\":[\"merit\",\"achievement\",\"meritorious service\",\"accomplishment\",\"exploit\",\"result\"],\"score\":5.7390887E-5},{\"word\":\"名堂\",\"reverse_translation\":[\"variety\",\"result\",\"item\"],\"score\":2.123383E-6}],\"base_form\":\"result\",\"pos_enum\":1},{\"pos\":\"动词\",\"terms\":[\"导致\",\"致使\",\"酿\"],\"entry\":[{\"word\":\"导致\",\"reverse_translation\":[\"lead to\",\"cause\",\"result\",\"bring about\",\"create\"],\"score\":0.45783335},{\"word\":\"致使\",\"reverse_translation\":[\"cause\",\"result\",\"occasion\"],\"score\":8.174057E-4},{\"word\":\"酿\",\"reverse_translation\":[\"brew\",\"ferment\",\"lead to\",\"brew up\",\"result\",\"make wine\"],\"score\":4.6644533E-7}],\"base_form\":\"result\",\"pos_enum\":2}],\"src\":\"en\",\"ld_result\":{\"srclangs\":[\"en\"],\"srclangs_confidences\":[1.0],\"extended_srclangs\":[\"en\"]}}";
-//        String responseText = "{\"sentences\":[{\"trans\":\"resul\",\"orig\":\"resul\",\"backend\":0},{\"translit\":\"Resul\"}],\"src\":\"en\",\"ld_result\":{\"srclangs\":[\"en\"],\"srclangs_confidences\":[0.6944445],\"extended_srclangs\":[\"en\"]}}";
-        GoogleTranslateResult translateResult = gson.fromJson(responseText, GoogleTranslateResult.class);
-        System.out.println(translateResult.toString());
-        List<String> list = new ArrayList<>();
-        for (DictBean dictBean : translateResult.dict) {
-            for (DictBean.EntryBean entryBean : dictBean.getEntry()) {
-                list.add(entryBean.word);
+        } else {
+            for (GoogleTranslateResult.SentencesBean sentence : sentences) {
+                if (sentence.getTrans() != null) {
+                    stringBuilder.append(sentence.getTrans());
+                }
             }
         }
+        return stringBuilder.toString();
     }
+
+//    public static void main(String[] args) {
+//        GsonBuilder gsonBuilder = new GsonBuilder();
+//        gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+//        Gson gson = gsonBuilder.create();
+//        String responseText = "{\"sentences\":[{\"trans\":\"结果\",\"orig\":\"result\",\"backend\":2},{\"translit\":\"Jiéguǒ\",\"src_translit\":\"riˈzəlt\"}],\"dict\":[{\"pos\":\"名词\",\"terms\":[\"结果\",\"成果\",\"效果\",\"成绩\",\"产物\",\"成效\",\"收获\",\"功\",\"名堂\"],\"entry\":[{\"word\":\"结果\",\"reverse_translation\":[\"result\",\"outcome\",\"consequence\",\"effect\",\"consequent\",\"upshot\"],\"score\":0.67663383},{\"word\":\"成果\",\"reverse_translation\":[\"achievement\",\"result\",\"gain\",\"profit\",\"consequent\",\"sequel\"],\"score\":0.02749503},{\"word\":\"效果\",\"reverse_translation\":[\"effect\",\"result\",\"sound effects\",\"consequent\",\"sequel\"],\"score\":0.011642128},{\"word\":\"成绩\",\"reverse_translation\":[\"score\",\"achievement\",\"result\",\"mark\"],\"score\":0.0039610346},{\"word\":\"产物\",\"reverse_translation\":[\"product\",\"result\",\"outcome\"],\"score\":0.0010999396},{\"word\":\"成效\",\"reverse_translation\":[\"effect\",\"result\"],\"score\":6.074443E-4},{\"word\":\"收获\",\"reverse_translation\":[\"gain\",\"result\",\"acquisition\"],\"score\":5.921267E-5},{\"word\":\"功\",\"reverse_translation\":[\"merit\",\"achievement\",\"meritorious service\",\"accomplishment\",\"exploit\",\"result\"],\"score\":5.7390887E-5},{\"word\":\"名堂\",\"reverse_translation\":[\"variety\",\"result\",\"item\"],\"score\":2.123383E-6}],\"base_form\":\"result\",\"pos_enum\":1},{\"pos\":\"动词\",\"terms\":[\"导致\",\"致使\",\"酿\"],\"entry\":[{\"word\":\"导致\",\"reverse_translation\":[\"lead to\",\"cause\",\"result\",\"bring about\",\"create\"],\"score\":0.45783335},{\"word\":\"致使\",\"reverse_translation\":[\"cause\",\"result\",\"occasion\"],\"score\":8.174057E-4},{\"word\":\"酿\",\"reverse_translation\":[\"brew\",\"ferment\",\"lead to\",\"brew up\",\"result\",\"make wine\"],\"score\":4.6644533E-7}],\"base_form\":\"result\",\"pos_enum\":2}],\"src\":\"en\",\"ld_result\":{\"srclangs\":[\"en\"],\"srclangs_confidences\":[1.0],\"extended_srclangs\":[\"en\"]}}";
+//        String responseText2 = "{\"sentences\":[{\"trans\":\"An idea plugin that improves development efficiency, the original intention is to write some commonly used functions to this plugin to improve coding efficiency. \",\"orig\":\"一个提升开发效率的idea插件，初衷就是将一些常用的功能写入到这个插件，提高编码效率。\",\"backend\":3,\"translation_engine_debug_info\":[{\"model_tracking\":{\"checkpoint_md5\":\"42aef7b0a5e950954fab74776e36dabe\",\"launch_doc\":\"\"}}]},{\"trans\":\"However, because there is too little information in this area, the new feature update may be relatively slow, but I will slowly add more features. I will add comments to the code to make the code as simple as possible. \",\"orig\":\"但是因为这方面的资料过少的原因， 所以新功能更新可能会相对缓慢，但是一定会慢慢加入更多的功能，我会在代码中加入注释，尽量让代码简单易懂，也算是为了尽量\",\"backend\":3,\"translation_engine_debug_info\":[{\"model_tracking\":{\"checkpoint_md5\":\"42aef7b0a5e950954fab74776e36dabe\",\"launch_doc\":\"\"}}]},{\"trans\":\"Let it be a reference for more people to write their own plugins. \",\"orig\":\"让它成为让一个更多人能自己编写插件的参考资料吧。\",\"backend\":3,\"translation_engine_debug_info\":[{\"model_tracking\":{\"checkpoint_md5\":\"42aef7b0a5e950954fab74776e36dabe\",\"launch_doc\":\"\"}}]},{\"trans\":\"Of course, you are welcome to submit feedback. You can also suggest the features you want to implement. If the suggestions are really good and time permits, I will try to add them.\",\"orig\":\"当然也欢迎提交反馈，有想要实现的功能也可以建议，要是建议确实不错且时间允许，我就会尝试添加。\",\"backend\":3,\"translation_engine_debug_info\":[{\"model_tracking\":{\"checkpoint_md5\":\"42aef7b0a5e950954fab74776e36dabe\",\"launch_doc\":\"\"}}]},{\"src_translit\":\"Yīgè tíshēng kāifā xiàolǜ de idea chājiàn, chūzhōng jiùshì jiāng yīxiē chángyòng de gōngnéng xiě rù dào zhège chājiàn, tígāo biānmǎ xiàolǜ. Dànshì yīnwèi zhè fāngmiàn de zīliàoguò shǎo de yuányīn, suǒyǐ xīn gōngnéng gēngxīn kěnéng huì xiāngduì huǎnmàn, dànshì yīdìng huì màn man jiārù gèng duō de gōngnéng, wǒ huì zài dàimǎ zhōng jiārù zhùshì, jǐnliàng ràng dàimǎ jiǎndān yì dǒng, yě suànshì wèile jǐnliàng ràng tā chéngwéi ràng yīgè gèng duō rén néng zìjǐ biānxiě chājiàn de cānkǎo zīliào ba. Dāngrán yě huānyíng tíjiāo fǎnkuì, yǒu xiǎng yào shíxiàn de gōngnéng yě kěyǐ jiànyì, yàoshi jiànyì quèshí bùcuò qiě shíjiān yǔnxǔ, wǒ jiù huì chángshì tiānjiā.\"}],\"src\":\"zh-CN\",\"ld_result\":{\"srclangs\":[\"zh-CN\"],\"srclangs_confidences\":[1.0],\"extended_srclangs\":[\"zh-CN\"]}}";
+//        GoogleTranslateResult translateResult = gson.fromJson(responseText, GoogleTranslateResult.class);
+//        System.out.println(translateResult.toString());
+//        List<String> list = new ArrayList<>();
+//        for (DictBean dictBean : translateResult.dict) {
+//            for (DictBean.EntryBean entryBean : dictBean.getEntry()) {
+//                list.add(entryBean.word);
+//            }
+//        }
+//    }
 }
