@@ -9,6 +9,8 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
+import com.intellij.ui.components.JBList;
+import com.intellij.ui.components.JBScrollPane;
 import com.intellij.util.ui.JBUI;
 
 import javax.swing.*;
@@ -78,8 +80,8 @@ public class GoogleReplaceAction extends AbstractTranslateAction {
                     }
                     set.addAll(candidateWords);
                 }
-                JList jList = new JList(set.toArray());
-                JScrollPane scrollPane = new JScrollPane(jList);
+                JBList jList = new JBList(set.toArray());
+                JBScrollPane scrollPane = new JBScrollPane(jList);
                 JPanel panel = new JPanel(new BorderLayout());
                 panel.add(scrollPane, BorderLayout.CENTER);
                 factory.createComponentPopupBuilder(panel, jList).createPopup().show(factory.guessBestPopupLocation(editor));

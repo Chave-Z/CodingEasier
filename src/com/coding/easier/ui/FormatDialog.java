@@ -5,7 +5,7 @@ import com.coding.easier.format.FormatAction;
 import com.coding.easier.util.GsonUtil;
 import com.coding.easier.util.NoticeUtil;
 import com.intellij.openapi.editor.Editor;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;

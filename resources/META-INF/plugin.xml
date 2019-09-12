@@ -1,8 +1,8 @@
 <idea-plugin url="https://gitee.com/Chave-Z/CodingEasier">
     <id>com.cheng.plugin.coding.easier</id>
     <name>Coding Easier</name>
-    <version>1.0.0</version>
-    <vendor email="chave_Z@163.com" url="https://github.com/Chave-Z">D丶Cheng</vendor>
+    <version>1.0</version>
+    <vendor email="chave_z@163.com" url="https://github.com/Chave-Z">Cheng</vendor>
 
     <description><![CDATA[
         <h1>Coding Easier</h1>
@@ -14,40 +14,38 @@
         </b>
         </p>
         <p>
+        <p><b>Features:</b>
             <ul>
             <li>Google translate
               <ul>
-                <li>Google translate 谷歌翻译.</li>
-                <li>Google translate and replace words 翻译及替换.</li>
+                <li>Google translate.</li>
+                <li>Google translate and replace words.</li>
               </ul>
             </li>
-            <li>json format json格式化.</li>
-            <li>Create constant 创建一个常量串.</li>
-            <li>Switch case 字符串替换
+            <li>json format.</li>
+            <li>Create constant.</li>
+            <li>Switch case
               <ul>
-                <li>to CONSTANT 转化成常量.</li>
-                <li>to camelCase 转化为小驼峰.</li>
-                <li>to underscore_case 转化为下划线命名.</li>
-                <li>to PascalCase 转化为大驼峰.</li>
-                <li>to Kebab-case 转化为短横线命名(首字母大写).</li>
-                <li>to kebab-case 转化为短横线命名(首字母小写).</li>
-                <li>to words 拆分驼峰、下划线、短横线、常量等正常命名的变量.</li>
-                <li>to UpperCase 转化为全大写形式.</li>
-                <li>to LowerCase 转化为全小写形式.</li>
+                <li>to CONSTANT.</li>
+                <li>to camelCase.</li>
+                <li>to underscore_case.</li>
+                <li>to PascalCase.</li>
+                <li>to Kebab-case.</li>
+                <li>to kebab-case.</li>
+                <li>to words.</li>
+                <li>to UpperCase.</li>
+                <li>to LowerCase.</li>
               </ul>
             </li>
           </ul>
         </p>
-        <p><h3>Google translate 谷歌翻译</h3><br/><img src="https://note.youdao.com/yws/api/personal/file/5F187AD69EE44F91846B8FDB16AA3A53?method=download&shareKey=09493546237624d36c7393c9928750ec" width="1100" height="400" alt="translate.gif"/></p>
+        <p><h3>Google translate</h3><br/><img src="https://note.youdao.com/yws/api/personal/file/5F187AD69EE44F91846B8FDB16AA3A53?method=download&shareKey=09493546237624d36c7393c9928750ec" width="1100" height="400" alt="translate.gif"/></p>
         <p><h3>json format</h3><br/><img src="https://note.youdao.com/yws/api/personal/file/FBF0B062FD244361B2A464793C9E3F62?method=download&shareKey=b6d39a6bedbdf5c15a623a4b1990395e" width="1100" height="400" alt="json.gif"/></p>
-        <p><h3>Create constant 创建一个常量串</h3><br/><img src="https://note.youdao.com/yws/api/personal/file/04C0485FDF2142A4AA6DC43F866122AF?method=download&shareKey=9d7f7b7bb645b223b5ce511b12467dc2" width="1100" height="443" alt="createConstant.gif"/></p>
-        <p><h3>Switch case 字符串替换</h3><br/><img src="https://note.youdao.com/yws/api/personal/file/58FF462FB4164134926588A717910499?method=download&shareKey=32e388d244aa7895bba5951a856ffd0c" width="1100" height="443" alt="switchCase.gif"/></p>
+        <p><h3>Create constant</h3><br/><img src="https://note.youdao.com/yws/api/personal/file/04C0485FDF2142A4AA6DC43F866122AF?method=download&shareKey=9d7f7b7bb645b223b5ce511b12467dc2" width="1100" height="443" alt="createConstant.gif"/></p>
+        <p><h3>Switch case</h3><br/><img src="https://note.youdao.com/yws/api/personal/file/58FF462FB4164134926588A717910499?method=download&shareKey=32e388d244aa7895bba5951a856ffd0c" width="1100" height="443" alt="switchCase.gif"/></p>
         ]]></description>
 
-    <change-notes><![CDATA[
-        <p>优化长文本翻译的功能</p>
-        ]]>
-    </change-notes>
+    <change-notes><![CDATA[<ul><li>优化长文本翻译的功能，优化界面组件，兼容2016.2</li></ul>]]></change-notes>
     <!--<em>most HTML tags may be used</em>-->
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->

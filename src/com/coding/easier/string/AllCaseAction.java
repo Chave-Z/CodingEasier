@@ -10,7 +10,9 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
-import org.apache.commons.lang3.StringUtils;
+import com.intellij.ui.components.JBList;
+import com.intellij.ui.components.JBScrollPane;
+import org.apache.commons.lang.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -71,8 +73,8 @@ public class AllCaseAction extends AnAction {
             public void run() {
                 final JBPopupFactory factory = JBPopupFactory.getInstance();
                 LinkedHashSet<String> set = getAllCase(selectedText);
-                JList jList = new JList(set.toArray());
-                JScrollPane scrollPane = new JScrollPane(jList);
+                JBList jList = new JBList(set.toArray());
+                JBScrollPane scrollPane = new JBScrollPane(jList);
                 JPanel panel = new JPanel(new BorderLayout());
                 panel.add(scrollPane, BorderLayout.CENTER);
                 factory.createComponentPopupBuilder(panel, jList).createPopup().show(factory.guessBestPopupLocation(editor));

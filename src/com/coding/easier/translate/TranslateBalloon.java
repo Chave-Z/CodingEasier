@@ -7,6 +7,7 @@ import com.coding.easier.ui.modules.ColorService;
 import com.coding.easier.ui.modules.IdeaColorService;
 import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.wm.WindowManager;
+import com.intellij.ui.components.JBScrollPane;
 
 /**
  * @author: D丶Cheng
@@ -61,15 +62,6 @@ public class TranslateBalloon {
         jPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         StringBuilder origBuilder = new StringBuilder("<body style='font-size:14px;font-weight: bold;color: #CAA923;'>");
         StringBuilder transBuilder = new StringBuilder("<body style='font-size:14px;font-weight: bold;color: #CAA923;'>");
-//        origBuilder.append("一个提升开发效率的idea插件，初衷就是将一些常用的功能写入到这个插件，提高编码效率。但是因为这方面的资料过少加上需要工作的原因，" +
-//                "所以新功能更新可能会相对缓慢，但是一定会慢慢加入更多的功能，我会在代码中加入注释，尽量让代码简单易懂，也算是为了尽量让它成为让一个更多人" +
-//                "能自己编写插件的参考资料吧。当然也欢迎提交反馈，有想要实现的功能也可以建议，要是建议确实不错且时间允许，我就会尝试添加。");
-//        transBuilder.append("一个提升开发效率的idea插件，初衷就是将一些常用的功能写入到这个插件，提高编码效率。但是因为这方面的资料过少加上需要工作的原因，" +
-//                "所以新功能更新可能会相对缓慢，但是一定会慢慢加入更多的功能，我会在代码中加入注释，尽量让代码简单易懂，也算是为了尽量让它成为让一个更多人" +
-//                "能自己编写插件的参考资料吧。当然也欢迎提交反馈，有想要实现的功能也可以建议，要是建议确实不错且时间允许，我就会尝试添加。"
-//                + "一个提升开发效率的idea插件，初衷就是将一些常用的功能写入到这个插件，提高编码效率。但是因为这方面的资料过少加上需要工作的原因，" +
-//                "所以新功能更新可能会相对缓慢，但是一定会慢慢加入更多的功能，我会在代码中加入注释，尽量让代码简单易懂，也算是为了尽量让它成为让一个更多人" +
-//                "能自己编写插件的参考资料吧。当然也欢迎提交反馈，有想要实现的功能也可以建议，要是建议确实不错且时间允许，我就会尝试添加。");
         if (result.getSentences().size() == 1 || result.getSentences().size() == 2) {
             GoogleTranslateResult.SentencesBean sentencesBean = result.getSentences().get(0);
             origBuilder.append(result.getSentences().get(0).getOrig());
@@ -107,12 +99,9 @@ public class TranslateBalloon {
         editorPane.setText(builder.toString());
         editorPane.setEditable(false);
         editorPane.setBackground(ColorService.forCurrentTheme(ColorService.Background));
-//        editorPane.setEnabled(false);
-//        editorPane.setFont(new Font("Microsoft YaHei", Font.BOLD, 16));
-//        editorPane.setForeground(new Color(255, 135, 15));
         editorPane.setSelectionStart(0);
         editorPane.setSelectionEnd(0);
-        JScrollPane scrollPane = new JScrollPane(editorPane);
+        JBScrollPane scrollPane = new JBScrollPane(editorPane);
         scrollPane.setBorder(null);
         scrollPane.setMaximumSize(new Dimension(520, 200));
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -120,7 +109,6 @@ public class TranslateBalloon {
         panel.add(scrollPane, BorderLayout.CENTER);
         setPreferredSize(builder.length(), panel);
         jPanel.add(panel, position);
-//        jPanel.add(panel);
     }
 
     private void setPreferredSize(int len, JPanel panel) {
