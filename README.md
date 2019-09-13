@@ -11,6 +11,8 @@ develop分支为开发分支，有些功能的代码可能是正在开发中，�
 master分支的代码是相对稳定的代码，但是功能可能没有develop中的全面。
 
 ## 更新历史
+### 2019-09-13
+插件已经通过审核，可以在线安装了，安装步骤请查看安装教程中的在线安装部分
 ### 2019-09-11
 修改翻译结果的显示界面，优化长文本翻译的功能
 
@@ -38,9 +40,17 @@ master分支的代码是相对稳定的代码，但是功能可能没有develop�
 
 #### 安装教程
 
-1. 本地安装     
-`File-->Settings-->Plugins--> Install Plugin From Disk... -->选择CodingEasier.jar-->确定`
-2. 在线安装(刚提交，等待审核中)
+##### 本地安装
+- windows、linux下：     
+`File --> Settings --> Plugins --> Install Plugin From Disk... --> 选择CodingEasier.jar --> 确定`
+- mac下：     
+`IntelliJ IDEA --> Preferences --> Settings --> Plugins --> Install Plugin From Disk... --> 选择CodingEasier.jar --> 确定`
+##### 在线安装(因为是新插件，可能比较靠后，往下翻翻就行)
+- windows、linux下：   
+`File --> Settings --> Plugins --> 在Marketplace中输入 Coding Easier然后搜索，点击安装`
+- mac下：     
+`IntelliJ IDEA --> Preferences --> Settings --> Plugins --> 在Marketplace中输入 Coding Easier然后搜索，点击安装`
+
 
 安装完毕以后重启即可
 
