@@ -115,18 +115,17 @@ public class TranslateBalloon {
         boolean flag = len * 16 > 540;
         int width = flag ? 520 : (len * 16 + 80);
         int height = flag ? Math.min(((len * 16 / 520 + 2) * 16), 200) : 32;
-        System.out.println("height--->" + height);
         this.height += height;
         this.width = Math.max(this.width, width);
         panel.setPreferredSize(new Dimension(width, height));
     }
 
-    public static void main(String[] args) {
-        TranslateBalloon translateBalloon = new TranslateBalloon(null);
-//        TranslateBalloon translateBalloon = new TranslateBalloon();
-        JFrame jFrame = new JFrame();
-        jFrame.add(translateBalloon.jPanel);
-        jFrame.setSize(520, 400);
-        jFrame.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        TranslateBalloon translateBalloon = new TranslateBalloon(null);
+////        TranslateBalloon translateBalloon = new TranslateBalloon();
+//        JFrame jFrame = new JFrame();
+//        jFrame.add(translateBalloon.jPanel);
+//        jFrame.setSize(520, 400);
+//        jFrame.setVisible(true);
+//    }
 }

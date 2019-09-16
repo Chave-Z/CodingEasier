@@ -68,7 +68,6 @@ public class GoogleTranslateAction extends AbstractTranslateAction {
         JFrame jFrame = WindowManager.getInstance().getFrame(project);
         int x = (int) (jFrame.getBounds().getWidth() / 2 - width / 2);
         int y = (int) (jFrame.getBounds().getHeight() / 2 - height / 2);
-        System.out.println(x + "     " + y);
         balloon.setBounds(new Rectangle(x, y, width, height));
     }
 }

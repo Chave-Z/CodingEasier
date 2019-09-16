@@ -156,6 +156,7 @@
                icon="/com/coding/easier/tools.png"
                popup="false">
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorToggleColumnMode"/>
+            <add-to-group group-id="ConsoleEditorPopupMenu" anchor="first"/>
             <separator/>
             <reference ref="CodingEasier.Code.Group"></reference>
         </group>

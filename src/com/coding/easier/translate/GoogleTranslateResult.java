@@ -274,7 +274,6 @@ public class GoogleTranslateResult {
             for (EntryBean entryBean : entry) {
                 stringBuilder.append("<span>").append(entryBean).append("</span><br>");
             }
-            System.out.println(stringBuilder.toString());
             return stringBuilder.toString();
         }
 //        @Override
