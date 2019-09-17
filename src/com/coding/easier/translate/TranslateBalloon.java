@@ -24,6 +24,10 @@ public class TranslateBalloon {
 
     private JPanel jPanel;
 
+    public static JEditorPane origEditorPane = new JEditorPane();
+
+    public static JEditorPane transEditorPane = new JEditorPane();
+
     private int origLength;
 
     private int transLength;
@@ -36,20 +40,20 @@ public class TranslateBalloon {
         return jPanel;
     }
 
-    public int getOrigLength() {
-        return origLength;
-    }
-
-    public int getTransLength() {
-        return transLength;
-    }
-
     public int getHeight() {
         return height;
     }
 
     public int getWidth() {
         return width;
+    }
+
+    public JEditorPane getOrigEditorPane() {
+        return origEditorPane;
+    }
+
+    public JEditorPane getTransEditorPane() {
+        return transEditorPane;
     }
 
     TranslateBalloon(GoogleTranslateResult result) {
@@ -83,24 +87,24 @@ public class TranslateBalloon {
         transBuilder.append("</body>");
         origLength = origBuilder.length();
         transLength = transBuilder.length();
-        createPanel("原文：", origBuilder, BorderLayout.NORTH);
-        createPanel("翻译结果：", transBuilder, BorderLayout.CENTER);
+        createPanel("原文：", origBuilder, BorderLayout.NORTH, origEditorPane);
+        createPanel("翻译结果：", transBuilder, BorderLayout.CENTER, transEditorPane);
     }
 
-    private void createPanel(String text, StringBuilder builder, String position) {
+    private void createPanel(String text, StringBuilder builder, String position, JEditorPane editorPane) {
         System.out.println(builder.toString());
         JPanel panel = new JPanel(new BorderLayout());
         JLabel label = new JLabel(text);
         label.setForeground(new Color(16, 187, 100));
         label.setFont(new Font("Microsoft YaHei", Font.BOLD, 14));
         panel.add(label, BorderLayout.NORTH);
-        JEditorPane editorPane = new JEditorPane();
         editorPane.setContentType("text/html");
         editorPane.setText(builder.toString());
         editorPane.setEditable(false);
         editorPane.setBackground(ColorService.forCurrentTheme(ColorService.Background));
         editorPane.setSelectionStart(0);
         editorPane.setSelectionEnd(0);
+        editorPane.getSelectedText();
         JBScrollPane scrollPane = new JBScrollPane(editorPane);
         scrollPane.setBorder(null);
         scrollPane.setMaximumSize(new Dimension(520, 200));

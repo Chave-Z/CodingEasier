@@ -3,11 +3,14 @@ package com.coding.easier.translate;
 import com.coding.easier.ui.modules.ColorService;
 import com.coding.easier.util.NoticeUtil;
 import com.coding.easier.constant.TranslateConstant;
+import com.intellij.notification.impl.NotificationsManagerImpl;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.ui.popup.BalloonBuilder;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
+import com.intellij.openapi.wm.IdeFrame;
 import com.intellij.openapi.wm.WindowManager;
+import com.intellij.ui.awt.RelativePoint;
 import com.intellij.util.ui.JBUI;
 
 import javax.swing.*;
@@ -52,7 +55,12 @@ public class GoogleTranslateAction extends AbstractTranslateAction {
                 balloonBuilder.setShadow(true);
                 Balloon balloon = balloonBuilder.createBalloon();
                 setBounds(translateBalloon, balloon);
-                balloon.show(factory.guessBestPopupLocation(editor), Balloon.Position.above);
+                IdeFrame window = (IdeFrame) NotificationsManagerImpl.findWindowForBalloon(project);
+                RelativePoint pointToShowPopup = null;
+                if (window != null) {
+                    pointToShowPopup = RelativePoint.getSouthEastOf(window.getComponent());
+                }
+                balloon.show(pointToShowPopup, Balloon.Position.above);
             }
         });
     }

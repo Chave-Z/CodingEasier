@@ -11,7 +11,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBScrollPane;
-import com.intellij.util.ui.JBUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -80,7 +79,7 @@ public class GoogleReplaceAction extends AbstractTranslateAction {
                     }
                     set.addAll(candidateWords);
                 }
-                JBList jList = new JBList(set.toArray());
+                JBList<Object> jList = new JBList<>(set.toArray());
                 JBScrollPane scrollPane = new JBScrollPane(jList);
                 JPanel panel = new JPanel(new BorderLayout());
                 panel.add(scrollPane, BorderLayout.CENTER);

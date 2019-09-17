@@ -54,7 +54,7 @@ public class FormatDialog extends JDialog {
         formatBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (StringUtils.isBlank(textPanel.getText())) {
+                if (StringUtils.isEmpty(textPanel.getText())) {
                     NoticeUtil.error("请输入数据");
                     return;
                 }

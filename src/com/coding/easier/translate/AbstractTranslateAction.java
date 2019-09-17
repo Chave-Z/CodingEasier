@@ -4,7 +4,7 @@ import com.coding.easier.util.NoticeUtil;
 import com.coding.easier.util.GsonUtil;
 import com.coding.easier.constant.TranslateConstant;
 import com.coding.easier.util.StringUtil;
-import com.coding.easier.util.TkTools;
+import com.coding.easier.util.TkUtil;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -18,6 +18,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.net.URLEncoder;
 import java.util.regex.Pattern;
@@ -38,16 +39,23 @@ public abstract class AbstractTranslateAction extends AnAction {
     public static SelectionModel selectionModel;
 
     @Override
-    public void actionPerformed(AnActionEvent event) {
+    public void actionPerformed(@NotNull AnActionEvent event) {
         try {
-            selectionModel = editor.getSelectionModel();
-            String selectedText = selectionModel.getSelectedText();
-            if (StringUtils.isBlank(selectedText)) {
+            String selectedText = "";
+            if (editor == null){
+                selectedText = TranslateBalloon.origEditorPane.getSelectedText();
+                selectedText = StringUtils.isEmpty(selectedText) ? TranslateBalloon.transEditorPane.getSelectedText():
+                        selectedText;
+            }else{
+                selectionModel = editor.getSelectionModel();
+                selectedText = selectionModel.getSelectedText();
+            }
+            if (StringUtils.isEmpty(selectedText)) {
                 NoticeUtil.error("请选择要翻译的字符");
                 return;
             }
             NoticeUtil.init(this.getClass().getSimpleName(), 1);
-            executeTranslate(event);
+            doTranslate(StringUtil.textToWords(selectedText));
         } catch (Exception e) {
             NoticeUtil.error(e);
         }
@@ -59,19 +67,6 @@ public abstract class AbstractTranslateAction extends AnAction {
         editor = e.getData(CommonDataKeys.EDITOR);
         e.getPresentation().setVisible(project != null && editor != null
                 && editor.getSelectionModel().hasSelection());
-    }
-
-    /**
-     * 执行翻译操作
-     *
-     * @param event
-     */
-    public void executeTranslate(AnActionEvent event) {
-        final SelectionModel selectionModel = editor.getSelectionModel();
-        String selectText = StringUtil.textToWords(selectionModel.getSelectedText());
-        if (!"".equals(selectText.trim())) {
-            doTranslate(selectText);
-        }
     }
 
     /**
@@ -87,7 +82,7 @@ public abstract class AbstractTranslateAction extends AnAction {
 
         CloseableHttpClient client = HttpClients.createDefault();
         //replace填坑参数地址值
-        String url = getTranslateUrl(translateType, TkTools.tk(word), URLEncoder.encode(word, "utf-8"));
+        String url = getTranslateUrl(translateType, TkUtil.tk(word), URLEncoder.encode(word, "utf-8"));
         HttpGet get = new HttpGet(url);
         get.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36");
         get.setHeader(HttpHeaders.ACCEPT_LANGUAGE, "zh-CN,zh;q=0.9");
@@ -130,6 +125,7 @@ public abstract class AbstractTranslateAction extends AnAction {
      * 文本弹出显示
      *
      * @param result
+     * @param translateType
      */
     protected abstract void showPopupBalloon(GoogleTranslateResult result, String translateType);
 }

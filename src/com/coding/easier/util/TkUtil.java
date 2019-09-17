@@ -5,7 +5,7 @@ package com.coding.easier.util;
  * @description: 计算tk
  * @create: 2019-09-04 15:31
  **/
-public class TkTools {
+public class TkUtil {
 
     public final static String TKK = "406398.2087938574";
 
@@ -28,7 +28,7 @@ public class TkTools {
      * @param cc
      * @return
      */
-    public static int Number(Object cc) {
+    public static int number(Object cc) {
         try {
             long a = Long.parseLong(cc.toString());
             int b = a > 2147483647 ? (int) (a - 4294967296L) : a < -2147483647 ? (int) (a + 4294967296L) : (int) a;
@@ -41,11 +41,11 @@ public class TkTools {
     public static String b(long a, String b) {
         for (int d = 0; d < b.length() - 2; d += 3) {
             char c = b.charAt(d + 2);
-            int c0 = 'a' <= c ? charCodeAt(c, 0) - 87 : Number(c);
+            int c0 = 'a' <= c ? charCodeAt(c, 0) - 87 : number(c);
             long c1 = '+' == b.charAt(d + 1) ? a >> c0 : a << c0;
             a = '+' == b.charAt(d) ? a + c1 & 4294967295L : a ^ c1;
         }
-        a = Number(a);
+        a = number(a);
         return a + "";
     }
 
@@ -54,7 +54,7 @@ public class TkTools {
         int d = 0;
         int h = 0;
         int[] g = new int[a.length() * 3];
-        h = Number(e[0]);
+        h = number(e[0]);
         for (int f = 0; f < a.length(); f++) {
             int c = charCodeAt(a, f);
             if (128 > c) {
@@ -92,10 +92,10 @@ public class TkTools {
         long aa = h;
         for (d = 0; d < g0.length; d++) {
             aa += g0[d];
-            aa = Number(b(aa, "+-a^+6"));
+            aa = number(b(aa, "+-a^+6"));
         }
-        aa = Number(b(aa, "+-3^+b+-f"));
-        long bb = aa ^ Number(e[1]);
+        aa = number(b(aa, "+-3^+b+-f"));
+        long bb = aa ^ number(e[1]);
         aa = bb;
         aa = aa + bb;
         bb = aa - bb;

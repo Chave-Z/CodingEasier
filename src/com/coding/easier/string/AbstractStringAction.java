@@ -30,7 +30,7 @@ public abstract class AbstractStringAction extends AnAction {
         final Editor editor = e.getData(CommonDataKeys.EDITOR);
         SelectionModel selectionModel = editor.getSelectionModel();
         String selectedText = selectionModel.getSelectedText();
-        if (StringUtils.isBlank(selectedText)) {
+        if (StringUtils.isEmpty(selectedText)) {
             NoticeUtil.error("请选择要转换的字符");
         }
         Matcher m = p.matcher(selectedText.trim());
