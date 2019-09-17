@@ -14,7 +14,7 @@ import com.intellij.ui.components.JBScrollPane;
  * @description: 翻译ui
  * @create: 2019-09-10 10:56
  **/
-public class TranslateBalloon {
+class TranslateBalloon {
 
     static {
         ColorService.install(new IdeaColorService());
@@ -24,9 +24,9 @@ public class TranslateBalloon {
 
     private JPanel jPanel;
 
-    public static JEditorPane origEditorPane = new JEditorPane();
+    static JEditorPane origEditorPane = new JEditorPane();
 
-    public static JEditorPane transEditorPane = new JEditorPane();
+    static JEditorPane transEditorPane = new JEditorPane();
 
     private int origLength;
 
@@ -36,24 +36,16 @@ public class TranslateBalloon {
 
     private int width;
 
-    public JPanel getjPanel() {
+    JPanel getjPanel() {
         return jPanel;
     }
 
-    public int getHeight() {
+    int getHeight() {
         return height;
     }
 
-    public int getWidth() {
+    int getWidth() {
         return width;
-    }
-
-    public JEditorPane getOrigEditorPane() {
-        return origEditorPane;
-    }
-
-    public JEditorPane getTransEditorPane() {
-        return transEditorPane;
     }
 
     TranslateBalloon(GoogleTranslateResult result) {
