@@ -1,10 +1,10 @@
 <idea-plugin url="https://gitee.com/Chave-Z/CodingEasier">
-    <id>com.cheng.plugin.coding.easier</id>
-    <name>Coding Easier</name>
-    <version>1.0</version>
-    <vendor email="chave_z@163.com" url="https://github.com/Chave-Z">Cheng</vendor>
+  <id>com.cheng.plugin.coding.easier</id>
+  <name>Coding Easier</name>
+  <version>1.1</version>
+  <vendor email="chave_z@163.com" url="https://github.com/Chave-Z">Cheng</vendor>
 
-    <description><![CDATA[
+  <description><![CDATA[
         <h1>Coding Easier</h1>
         <p>
         <b>
@@ -45,121 +45,121 @@
         <p><h3>Switch case</h3><br/><img src="https://note.youdao.com/yws/api/personal/file/58FF462FB4164134926588A717910499?method=download&shareKey=32e388d244aa7895bba5951a856ffd0c" width="1100" height="443" alt="switchCase.gif"/></p>
         ]]></description>
 
-    <change-notes><![CDATA[<ul><li>优化长文本翻译的功能，优化界面组件，兼容2016.2</li></ul>]]></change-notes>
-    <!--<em>most HTML tags may be used</em>-->
+  <change-notes><![CDATA[<ul><li>优化长文本翻译的功能，优化界面组件，兼容2016.2</li></ul>]]></change-notes>
+  <!--<em>most HTML tags may be used</em>-->
 
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="162.0"/>
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="162.0"/>
 
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
-    <depends>com.intellij.modules.lang</depends>
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+  <depends>com.intellij.modules.lang</depends>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
-    </extensions>
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+  </extensions>
 
-    <actions>
-        <group id="CodingEasier.Code.Group" text="CodingEasier"
-               description="CodingEasier"
-               icon="/com/coding/easier/tools.png"
-               popup="true">
-            <add-to-group group-id="EditMenu" anchor="last"/>
-            <action id="CodingEasier.Group.Translate"
-                    class="com.coding.easier.translate.GoogleTranslateAction"
-                    text="Translate"
-                    description="Translate">
-                <keyboard-shortcut keymap="$default" first-keystroke="alt shift Q"/>
-            </action>
-            <action id="CodingEasier.Group.Replace"
-                    class="com.coding.easier.translate.GoogleReplaceAction"
-                    text="Translate And Replace"
-                    description="Translate and replace...">
-                <keyboard-shortcut keymap="$default" first-keystroke="alt shift A"/>
-            </action>
-            <action id="CodingEasier.Group.CreateConstant"
-                    class="com.coding.easier.string.CreateConstantAction"
-                    text="Create a Constant"
-                    description="Create a Constant">
-                <keyboard-shortcut keymap="$default" first-keystroke="alt shift Z"/>
-            </action>
-            <action id="CodingEasier.Group.Format"
-                    class="com.coding.easier.format.FormatAction"
-                    text="format"
-                    description="Format">
-            </action>
-            <group id="CodingEasier.Group.SwitchCase" text="Switch Case..."
-                   description="Group of String manipulation Switch case actions"
-                   popup="true">
-                <separator/>
-                <action id="CodingEasier.Group.SwitchCase.SwitchCase"
-                        class="com.coding.easier.string.AllCaseAction"
-                        text="all case"
-                        description="Text to all case">
-                    <keyboard-shortcut keymap="$default" first-keystroke="alt shift W"/>
-                </action>
-                <separator/>
-                <action id="CodingEasier.Group.SwitchCase.Constant"
-                        class="com.coding.easier.string.ConstantAction"
-                        text="to CONSTANT"
-                        description="Text to constant">
-                </action>
-                <action id="CodingEasier.Group.SwitchCase.CamelCase"
-                        class="com.coding.easier.string.CamelCaseAction"
-                        text="to camelCase"
-                        description="Text to camelCase">
-                </action>
-                <action id="CodingEasier.Group.SwitchCase.UnderscoreCase"
-                        class="com.coding.easier.string.UnderscoreCaseAction"
-                        text="to underscore_case"
-                        description="Text to underscoreCase">
-                </action>
-                <action id="CodingEasier.Group.SwitchCase.PascalCase"
-                        class="com.coding.easier.string.PascalCaseAction"
-                        text="to PascalCase"
-                        description="Text to pascalCase">
-                </action>
-                <action id="CodingEasier.Group.SwitchCase.UpperKebabCase"
-                        class="com.coding.easier.string.UpperKebabCaseAction"
-                        text="to Kebab-case"
-                        description="Text to upperKebabCase">
-                </action>
-                <action id="CodingEasier.Group.SwitchCase.KebabCase"
-                        class="com.coding.easier.string.KebabCaseAction"
-                        text="to kebab-case"
-                        description="Text to kebabCase">
-                </action>
-                <action id="CodingEasier.Group.SwitchCase.Words"
-                        class="com.coding.easier.string.WordsAction"
-                        text="to words"
-                        description="Text to words">
-                </action>
-                <separator/>
-                <action id="CodingEasier.Group.SwitchCase.UpperCase"
-                        class="com.coding.easier.string.UpperCaseAction"
-                        text="to UpperCase"
-                        description="Text to upperCase">
-                </action>
-                <action id="CodingEasier.Group.SwitchCase.LowerCase"
-                        class="com.coding.easier.string.LowerCaseAction"
-                        text="to LowerCase"
-                        description="Text to lowerCase">
-                </action>
-            </group>
-            <separator/>
-        </group>
-        <group id="CodingEasier.EditorPopupMenu" text="Coding Easier"
-               description="Coding Easier plugin"
-               icon="/com/coding/easier/tools.png"
-               popup="false">
-            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorToggleColumnMode"/>
-            <add-to-group group-id="ConsoleEditorPopupMenu" anchor="first"/>
-            <separator/>
-            <reference ref="CodingEasier.Code.Group"></reference>
-        </group>
-    </actions>
+  <actions>
+    <group id="CodingEasier.Code.Group" text="CodingEasier"
+           description="CodingEasier"
+           icon="/com/coding/easier/tools.png"
+           popup="true">
+      <add-to-group group-id="EditMenu" anchor="last"/>
+      <action id="CodingEasier.Group.Translate"
+              class="com.coding.easier.translate.GoogleTranslateAction"
+              text="Translate"
+              description="Translate">
+        <keyboard-shortcut keymap="$default" first-keystroke="alt shift Q"/>
+      </action>
+      <action id="CodingEasier.Group.Replace"
+              class="com.coding.easier.translate.GoogleReplaceAction"
+              text="Translate And Replace"
+              description="Translate and replace...">
+        <keyboard-shortcut keymap="$default" first-keystroke="alt shift A"/>
+      </action>
+      <action id="CodingEasier.Group.CreateConstant"
+              class="com.coding.easier.string.CreateConstantAction"
+              text="Create a Constant"
+              description="Create a Constant">
+        <keyboard-shortcut keymap="$default" first-keystroke="alt shift Z"/>
+      </action>
+      <action id="CodingEasier.Group.Format"
+              class="com.coding.easier.format.FormatAction"
+              text="format"
+              description="Format">
+      </action>
+      <group id="CodingEasier.Group.SwitchCase" text="Switch Case..."
+             description="Group of String manipulation Switch case actions"
+             popup="true">
+        <separator/>
+        <action id="CodingEasier.Group.SwitchCase.SwitchCase"
+                class="com.coding.easier.string.AllCaseAction"
+                text="all case"
+                description="Text to all case">
+          <keyboard-shortcut keymap="$default" first-keystroke="alt shift W"/>
+        </action>
+        <separator/>
+        <action id="CodingEasier.Group.SwitchCase.Constant"
+                class="com.coding.easier.string.ConstantAction"
+                text="to CONSTANT"
+                description="Text to constant">
+        </action>
+        <action id="CodingEasier.Group.SwitchCase.CamelCase"
+                class="com.coding.easier.string.CamelCaseAction"
+                text="to camelCase"
+                description="Text to camelCase">
+        </action>
+        <action id="CodingEasier.Group.SwitchCase.UnderscoreCase"
+                class="com.coding.easier.string.UnderscoreCaseAction"
+                text="to underscore_case"
+                description="Text to underscoreCase">
+        </action>
+        <action id="CodingEasier.Group.SwitchCase.PascalCase"
+                class="com.coding.easier.string.PascalCaseAction"
+                text="to PascalCase"
+                description="Text to pascalCase">
+        </action>
+        <action id="CodingEasier.Group.SwitchCase.UpperKebabCase"
+                class="com.coding.easier.string.UpperKebabCaseAction"
+                text="to Kebab-case"
+                description="Text to upperKebabCase">
+        </action>
+        <action id="CodingEasier.Group.SwitchCase.KebabCase"
+                class="com.coding.easier.string.KebabCaseAction"
+                text="to kebab-case"
+                description="Text to kebabCase">
+        </action>
+        <action id="CodingEasier.Group.SwitchCase.Words"
+                class="com.coding.easier.string.WordsAction"
+                text="to words"
+                description="Text to words">
+        </action>
+        <separator/>
+        <action id="CodingEasier.Group.SwitchCase.UpperCase"
+                class="com.coding.easier.string.UpperCaseAction"
+                text="to UpperCase"
+                description="Text to upperCase">
+        </action>
+        <action id="CodingEasier.Group.SwitchCase.LowerCase"
+                class="com.coding.easier.string.LowerCaseAction"
+                text="to LowerCase"
+                description="Text to lowerCase">
+        </action>
+      </group>
+      <separator/>
+    </group>
+    <group id="CodingEasier.EditorPopupMenu" text="Coding Easier"
+           description="Coding Easier plugin"
+           icon="/com/coding/easier/tools.png"
+           popup="false">
+      <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorToggleColumnMode"/>
+      <add-to-group group-id="ConsoleEditorPopupMenu" anchor="first"/>
+      <separator/>
+      <reference ref="CodingEasier.Code.Group"></reference>
+    </group>
+  </actions>
 
 </idea-plugin>

@@ -1,8 +1,8 @@
 package com.coding.easier.translate;
 
-import com.coding.easier.util.NoticeUtil;
-import com.coding.easier.util.GsonUtil;
 import com.coding.easier.constant.TranslateConstant;
+import com.coding.easier.util.GsonUtil;
+import com.coding.easier.util.NoticeUtil;
 import com.coding.easier.util.StringUtil;
 import com.coding.easier.util.TkUtil;
 import com.intellij.openapi.actionSystem.AnAction;

@@ -11,14 +11,11 @@
 注：
 反馈问题请提供操作系统、编译器版本、错误截图、如何操作导致的、还有对应的数据，以便我更好的查找错误。
 
-## 分支说明
-develop分支为开发分支，有些功能的代码可能是正在开发中，不完善的，但是develop中的jar包一定是最新且兼容我自己使用的2019.2版本的idea的，
-master分支的代码是相对稳定的代码，但是功能可能没有develop中的全面。
-
 ## 更新历史
-### 2019-09-17
-修复在翻译后弹出的界面上选中文字，直接翻译报空指针的问题，但是这个不太影响正常使用，所以打算再加几个功能或者看看是否有需要优化的
-内容，然后再和下个版本一块更新发版吧，要是实在受不了的，可以先使用develop分支的jar包先本地安装使用，见谅...
+### v1.1
+1. 修复在翻译后弹出的界面上选中文字，直接翻译报空指针的问题。
+2. 之前翻译替换和字符传格式替换增加了按键操作，不需要翻译以后，切换鼠标替换了。（强烈建议在用这个插件的朋友更新体验🤣）
+3. 减小插件体积
 ### 2019-09-13
 插件已经通过审核，可以在线安装了，安装步骤请查看安装教程中的在线安装部分
 ### 2019-09-11
@@ -66,11 +63,11 @@ master分支的代码是相对稳定的代码，但是功能可能没有develop�
 本插件暂时大部分还都是字符相关的处理，所以在没选择字符串的情况下，插件默认是置灰的，选中要处理的字符串，然后再右键就能正常使用了。
 为了节省动图大小，字符串都预先输入了，没有看到清楚的点击步骤的均为快捷键操作。
 - 中英互译与替换(一键操作，多词候选，再也不用担心词汇量不足，每次都得临时翻译的尴尬局面了)
-![translate](/images/translate.gif)
+![translate](https://cdn.jsdelivr.net/gh/Chave-Z/picture@master/data/translate.gif)
 - 字符选择
-![switchCase](/images/switchCase.gif)
+![switchCase](https://cdn.jsdelivr.net/gh/Chave-Z/picture@master/data/switchCase.gif)
 - 创建常量
-![createConstant](/images/createConstant.gif)
+![createConstant](https://cdn.jsdelivr.net/gh/Chave-Z/picture@master/data/createConstant.gif)
 - json格式化
-![json](/images/json.gif)
+![json](https://cdn.jsdelivr.net/gh/Chave-Z/picture@master/data/json.gif)
 

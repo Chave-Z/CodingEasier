@@ -1,13 +1,11 @@
 package com.coding.easier.translate;
 
-import javax.swing.*;
-import java.awt.*;
-
 import com.coding.easier.ui.modules.ColorService;
 import com.coding.easier.ui.modules.IdeaColorService;
-import com.intellij.openapi.ui.popup.Balloon;
-import com.intellij.openapi.wm.WindowManager;
 import com.intellij.ui.components.JBScrollPane;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author: D丶Cheng

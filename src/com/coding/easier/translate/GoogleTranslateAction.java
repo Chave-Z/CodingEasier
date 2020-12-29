@@ -1,8 +1,8 @@
 package com.coding.easier.translate;
 
+import com.coding.easier.constant.TranslateConstant;
 import com.coding.easier.ui.modules.ColorService;
 import com.coding.easier.util.NoticeUtil;
-import com.coding.easier.constant.TranslateConstant;
 import com.intellij.notification.impl.NotificationsManagerImpl;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.ui.popup.Balloon;
