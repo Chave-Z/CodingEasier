@@ -8,7 +8,7 @@ import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,7 +30,7 @@ public abstract class AbstractStringAction extends AnAction {
         final Editor editor = e.getData(CommonDataKeys.EDITOR);
         SelectionModel selectionModel = editor.getSelectionModel();
         String selectedText = selectionModel.getSelectedText();
-        if (StringUtils.isBlank(selectedText)) {
+        if (StringUtils.isEmpty(selectedText)) {
             NoticeUtil.error("请选择要转换的字符");
         }
         Matcher m = p.matcher(selectedText.trim());

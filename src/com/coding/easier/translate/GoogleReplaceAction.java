@@ -1,7 +1,8 @@
 package com.coding.easier.translate;
 
-import com.coding.easier.util.NoticeUtil;
 import com.coding.easier.constant.TranslateConstant;
+import com.coding.easier.ui.Popups;
+import com.coding.easier.util.NoticeUtil;
 import com.coding.easier.util.StringUtil;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.WriteCommandAction;
@@ -9,12 +10,23 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
+import com.intellij.openapi.ui.popup.ListPopup;
+import com.intellij.openapi.ui.popup.PopupStep;
+import com.intellij.openapi.ui.popup.util.BaseListPopupStep;
+import com.intellij.openapi.util.NlsContexts;
+import com.intellij.ui.components.JBList;
+import com.intellij.ui.components.JBPanel;
+import com.intellij.ui.components.JBScrollPane;
+import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.regex.Matcher;
 
 /**
@@ -47,40 +59,41 @@ public class GoogleReplaceAction extends AbstractTranslateAction {
             public void run() {
                 final JBPopupFactory factory = JBPopupFactory.getInstance();
                 LinkedHashSet<String> set = new LinkedHashSet<>();
-                String text;
+                StringBuilder text = new StringBuilder();
+                boolean addFlag = true;
                 if (result.getDict() == null) {
-                    text = result.getSentences().get(0).getTrans();
-                    set.add(text + "    ");
+                    if (result.getSentences().size() == 1 || result.getSentences().size() == 2) {
+                        text = new StringBuilder(result.getSentences().get(0).getTrans());
+                    } else {
+                        addFlag = false;
+                        for (GoogleTranslateResult.SentencesBean sentence : result.getSentences()) {
+                            if (sentence.getTrans() != null) {
+                                text.append(sentence.getTrans());
+                            }
+                        }
+                    }
+                    set.add(text.toString());
                 } else {
                     for (GoogleTranslateResult.DictBean dictBean : result.getDict()) {
                         for (GoogleTranslateResult.DictBean.EntryBean entryBean : dictBean.getEntry()) {
-                            text = entryBean.getWord();
-                            set.add(text + "    ");
+                            text = new StringBuilder(entryBean.getWord());
+                            set.add(text.toString());
                         }
                     }
                 }
-                LinkedHashSet<String> candidateWords = new LinkedHashSet<>();
-                // 填充结果
-                for (String s : set) {
-                    addWord(candidateWords, s.trim(), translateType);
-                }
-                set.addAll(candidateWords);
-                JLabel jLabel = new JLabel("请选择需要的结果    ");
-                JList jList = new JList(set.toArray());
-                JPanel panel = new JPanel(new BorderLayout());
-                panel.add(jLabel, BorderLayout.NORTH);
-                panel.add(jList, BorderLayout.CENTER);
-                factory.createComponentPopupBuilder(panel, jList).createPopup().show(factory.guessBestPopupLocation(editor));
-                jList.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        if (e.getClickCount() == 2) {
-                            System.out.println(jList.getSelectedValue());
-                            final SelectionModel selectionModel = editor.getSelectionModel();
-                            replaceStr(project, editor, selectionModel, jList.getSelectedValue().toString().trim());
-                        }
+                if (addFlag) {
+                    LinkedHashSet<String> candidateWords = new LinkedHashSet<>();
+                    // 填充结果
+                    for (String s : set) {
+                        addWord(candidateWords, s.trim(), translateType);
                     }
-                });
+                    set.addAll(candidateWords);
+                }
+                SelectListStep step = new SelectListStep("", new ArrayList(set));
+                step.setDefaultOptionIndex(0);
+                ListPopup popup = factory.createListPopup(step, 20);
+                popup.setRequestFocus(true);
+                popup.show(factory.guessBestPopupLocation(editor));
             }
         });
     }
@@ -102,19 +115,34 @@ public class GoogleReplaceAction extends AbstractTranslateAction {
     /**
      * 替换选中的字符串
      *
-     * @param editor
      * @param selectionModel
-     * @param project
      * @param newText
      */
-    public static void replaceStr(Project project, Editor editor, SelectionModel selectionModel, String newText) {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                editor.getDocument().replaceString(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd(), newText);
-            }
-        };
+    public static void replaceStr(SelectionModel selectionModel, String newText) {
+        Runnable runnable = () -> editor.getDocument().replaceString(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd(), newText);
         WriteCommandAction.runWriteCommandAction(project, runnable);
         selectionModel.removeSelection();
+    }
+
+
+    class SelectListStep extends BaseListPopupStep {
+
+        public SelectListStep(@Nullable @NlsContexts.PopupTitle String title, List values) {
+            super(title, values);
+        }
+
+        @Nullable
+        @Override
+        public PopupStep onChosen(Object selectedValue, boolean finalChoice) {
+            final SelectionModel selectionModel = editor.getSelectionModel();
+            replaceStr(selectionModel, selectedValue.toString());
+            System.out.println(selectedValue.toString());
+            return super.onChosen(selectedValue, finalChoice);
+        }
+
+        @Override
+        public boolean isSpeedSearchEnabled() {
+            return true;
+        }
     }
 }

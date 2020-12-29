@@ -1,26 +1,25 @@
 package com.coding.easier.translate;
 
-import com.coding.easier.util.NoticeUtil;
-import com.coding.easier.util.GsonUtil;
 import com.coding.easier.constant.TranslateConstant;
+import com.coding.easier.util.GsonUtil;
+import com.coding.easier.util.NoticeUtil;
 import com.coding.easier.util.StringUtil;
-import com.coding.easier.util.TkTools;
+import com.coding.easier.util.TkUtil;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.jetbrains.annotations.NotNull;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.URLEncoder;
 import java.util.regex.Pattern;
 
@@ -35,24 +34,30 @@ public abstract class AbstractTranslateAction extends AnAction {
 
     public static final Pattern p = compile("[\u4e00-\u9fa5]");
 
-    private final static CharSequence UNDERSCORE = "_";
-
     public static Editor editor;
     public static Project project;
+    public static SelectionModel selectionModel;
 
     @Override
-    public void actionPerformed(AnActionEvent event) {
+    public void actionPerformed(@NotNull AnActionEvent event) {
         try {
-            SelectionModel selectionModel = editor.getSelectionModel();
-            String selectedText = selectionModel.getSelectedText();
-            if (StringUtils.isBlank(selectedText)) {
+            String selectedText = "";
+            if (editor == null){
+                selectedText = TranslateBalloon.origEditorPane.getSelectedText();
+                selectedText = StringUtils.isEmpty(selectedText) ? TranslateBalloon.transEditorPane.getSelectedText():
+                        selectedText;
+            }else{
+                selectionModel = editor.getSelectionModel();
+                selectedText = selectionModel.getSelectedText();
+            }
+            if (StringUtils.isEmpty(selectedText)) {
                 NoticeUtil.error("请选择要翻译的字符");
                 return;
             }
             NoticeUtil.init(this.getClass().getSimpleName(), 1);
-            executeTranslate(event);
+            doTranslate(StringUtil.textToWords(selectedText));
         } catch (Exception e) {
-            NoticeUtil.error(getStackTrace(e));
+            NoticeUtil.error(e);
         }
     }
 
@@ -62,19 +67,6 @@ public abstract class AbstractTranslateAction extends AnAction {
         editor = e.getData(CommonDataKeys.EDITOR);
         e.getPresentation().setVisible(project != null && editor != null
                 && editor.getSelectionModel().hasSelection());
-    }
-
-    /**
-     * 执行翻译操作
-     *
-     * @param event
-     */
-    public void executeTranslate(AnActionEvent event) {
-        final SelectionModel selectionModel = editor.getSelectionModel();
-        String selectText = StringUtil.textToWords(selectionModel.getSelectedText());
-        if (null != selectText && !"".equals(selectText.trim())) {
-            doTranslate(selectText);
-        }
     }
 
     /**
@@ -90,7 +82,7 @@ public abstract class AbstractTranslateAction extends AnAction {
 
         CloseableHttpClient client = HttpClients.createDefault();
         //replace填坑参数地址值
-        String url = getTranslateUrl(translateType, TkTools.tk(word), URLEncoder.encode(word, "utf-8"));
+        String url = getTranslateUrl(translateType, TkUtil.tk(word), URLEncoder.encode(word, "utf-8"));
         HttpGet get = new HttpGet(url);
         get.setHeader(HttpHeaders.USER_AGENT, "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36");
         get.setHeader(HttpHeaders.ACCEPT_LANGUAGE, "zh-CN,zh;q=0.9");
@@ -104,26 +96,6 @@ public abstract class AbstractTranslateAction extends AnAction {
             return translateResult;
         }
         return null;
-    }
-
-    /**
-     * 用e.getMessage()来获取异常信息，
-     * 但是这样获取到的信息内容并不全，而且有时候为空。
-     * 我们可以用下面方法来获取
-     *
-     * @param throwable
-     * @return
-     */
-    public static String getStackTrace(Throwable throwable) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-
-        try {
-            throwable.printStackTrace(pw);
-            return sw.toString();
-        } finally {
-            pw.close();
-        }
     }
 
 
@@ -153,6 +125,7 @@ public abstract class AbstractTranslateAction extends AnAction {
      * 文本弹出显示
      *
      * @param result
+     * @param translateType
      */
     protected abstract void showPopupBalloon(GoogleTranslateResult result, String translateType);
 }

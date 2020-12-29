@@ -4,6 +4,9 @@ import com.coding.easier.constant.TranslateConstant;
 import com.intellij.notification.*;
 import com.intellij.openapi.ui.Messages;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 /**
  * @description: 通知
  * @create: 2019-08-30 16:22
@@ -56,5 +59,35 @@ public class NoticeUtil {
                 "错误",
                 Messages.getInformationIcon()
         );
+    }
+
+    /**
+     * 错误信息
+     *
+     * @param throwable
+     */
+    public static void error(Throwable throwable) {
+        Messages.showMessageDialog(
+                getStackTrace(throwable),
+                "错误",
+                Messages.getInformationIcon()
+        );
+    }
+
+
+    /**
+     *
+     * @param throwable
+     * @return
+     */
+    public static String getStackTrace(Throwable throwable) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        try {
+            throwable.printStackTrace(pw);
+            return sw.toString();
+        } finally {
+            pw.close();
+        }
     }
 }
