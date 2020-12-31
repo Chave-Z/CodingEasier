@@ -91,8 +91,8 @@ public abstract class AbstractTranslateAction extends AnAction {
         if (200 == response.getStatusLine().getStatusCode()) {
             editor = mEditor;
             String responseText = EntityUtils.toString(response.getEntity(), "utf-8");
-            GoogleTranslateResult translateResult = GsonUtil.gson.fromJson(responseText, GoogleTranslateResult.class);
-            System.out.println(translateResult.toString());
+            GoogleTranslateResult translateResult = GsonUtil.jsonToObject(responseText, GoogleTranslateResult.class);
+//            System.out.println(translateResult.toString());
             return translateResult;
         }
         return null;

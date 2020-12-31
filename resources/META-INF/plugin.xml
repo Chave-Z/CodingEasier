@@ -1,7 +1,7 @@
 <idea-plugin url="https://gitee.com/Chave-Z/CodingEasier">
   <id>com.cheng.plugin.coding.easier</id>
   <name>Coding Easier</name>
-  <version>1.1</version>
+  <version>1.2</version>
   <vendor email="chave_z@163.com" url="https://github.com/Chave-Z">Cheng</vendor>
 
   <description><![CDATA[
@@ -45,7 +45,7 @@
         <p><h3>Switch case</h3><br/><img src="https://note.youdao.com/yws/api/personal/file/58FF462FB4164134926588A717910499?method=download&shareKey=32e388d244aa7895bba5951a856ffd0c" width="1100" height="443" alt="switchCase.gif"/></p>
         ]]></description>
 
-  <change-notes><![CDATA[<ul><li>优化长文本翻译的功能，优化界面组件，兼容2016.2</li></ul>]]></change-notes>
+  <change-notes><![CDATA[<ul><li>优化json格式化工具</li></ul>]]></change-notes>
   <!--<em>most HTML tags may be used</em>-->
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
@@ -90,6 +90,7 @@
               class="com.coding.easier.format.FormatAction"
               text="format"
               description="Format">
+        <keyboard-shortcut keymap="$default" first-keystroke="alt shift J"/>
       </action>
       <group id="CodingEasier.Group.SwitchCase" text="Switch Case..."
              description="Group of String manipulation Switch case actions"

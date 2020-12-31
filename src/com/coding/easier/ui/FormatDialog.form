@@ -15,23 +15,6 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="1ea0d" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
-            <constraints border-constraint="North"/>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="b8dd8" class="javax.swing.JLabel">
-                <constraints/>
-                <properties>
-                  <text value="类型："/>
-                </properties>
-              </component>
-              <component id="f340e" class="javax.swing.JComboBox" binding="comboBox">
-                <constraints/>
-                <properties/>
-              </component>
-            </children>
-          </grid>
           <grid id="a127a" binding="centerPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints border-constraint="Center"/>
             <properties/>
@@ -55,10 +38,28 @@
             <properties/>
             <border type="none"/>
             <children>
+              <component id="98a96" class="javax.swing.JButton" binding="escapeBtn">
+                <constraints/>
+                <properties>
+                  <text value="转义"/>
+                </properties>
+              </component>
+              <component id="8ce96" class="javax.swing.JButton" binding="unescapeBtn">
+                <constraints/>
+                <properties>
+                  <text value="去转义"/>
+                </properties>
+              </component>
+              <component id="8dd86" class="javax.swing.JButton" binding="compressBtn">
+                <constraints/>
+                <properties>
+                  <text value="压缩"/>
+                </properties>
+              </component>
               <component id="696ae" class="javax.swing.JButton" binding="formatBtn">
                 <constraints/>
                 <properties>
-                  <text value="Format"/>
+                  <text value="格式化"/>
                 </properties>
               </component>
             </children>

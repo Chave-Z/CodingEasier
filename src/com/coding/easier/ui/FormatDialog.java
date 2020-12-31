@@ -1,10 +1,13 @@
 package com.coding.easier.ui;
 
 import com.coding.easier.enums.FormatEnum;
+import com.coding.easier.enums.JsonEnum;
 import com.coding.easier.format.FormatAction;
 import com.coding.easier.util.GsonUtil;
 import com.coding.easier.util.NoticeUtil;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
 import org.apache.commons.lang.StringUtils;
 
 import javax.swing.*;
@@ -23,9 +26,11 @@ public class FormatDialog extends JDialog {
 
     public JPanel contentPanel;
     private JButton formatBtn;
-    private JComboBox comboBox;
     private JTextPane textPanel;
     private JPanel centerPanel;
+    private JButton compressBtn;
+    private JButton unescapeBtn;
+    private JButton escapeBtn;
 
     private String selectedType = FormatEnum.JSON.getValue();
 
@@ -37,47 +42,30 @@ public class FormatDialog extends JDialog {
         setContentPane(contentPanel);
         setModal(true);
         getRootPane().setDefaultButton(formatBtn);
-        comboBox.addItem(FormatEnum.JSON.getValue());
-//        comboBox.addItem(FormatEnum.XML.getValue());
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         initListener();
+
     }
 
     public void initListener() {
-        comboBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(final ItemEvent e) {
-                selectedType = comboBox.getSelectedItem().toString();
-            }
-        });
-        formatBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (StringUtils.isEmpty(textPanel.getText())) {
-                    NoticeUtil.error("请输入数据");
-                    return;
-                }
-                String formattedString = "";
-                if (FormatEnum.JSON.getValue().equals(selectedType)) {
-                    formattedString = formatJson(textPanel.getText());
-                } else {
-                    NoticeUtil.error("正在开发中...");
-                    return;
-                }
-                if ("".equals(formattedString)) {
-                    return;
-                }
-                textPanel.setText(formattedString);
-            }
+
+        formatBtn.addActionListener(e -> {
+            doJsonAction(JsonEnum.FORMAT.getValue());
         });
 
-//        compressBtn.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//
-//            }
-//        });
+        compressBtn.addActionListener(e -> {
+            doJsonAction(JsonEnum.COMPRESS.getValue());
+        });
+
+        escapeBtn.addActionListener(e -> {
+            doJsonAction(JsonEnum.ESCAPE.getValue());
+        });
+
+        unescapeBtn.addActionListener(e -> {
+            doJsonAction(JsonEnum.UNESCAPE.getValue());
+        });
+
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -94,20 +82,34 @@ public class FormatDialog extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    /**
-     * 格式化json
-     *
-     * @param text
-     */
-    private String formatJson(String text) {
-        String str = "";
+    private void doJsonAction(String type) {
+        String text = textPanel.getText().trim();
+        if (StringUtils.isBlank(text)) {
+            NoticeUtil.error("请输入数据");
+            return;
+        }
+        String formattedString = "";
         try {
-            str = GsonUtil.toPrettyFormat(text);
+            if (JsonEnum.FORMAT.getValue().equals(type)) {
+                formattedString = GsonUtil.format(text);
+            } else if (JsonEnum.COMPRESS.getValue().equals(type)) {
+                formattedString = GsonUtil.compress(text);
+            } else if (JsonEnum.ESCAPE.getValue().equals(type)) {
+                formattedString = GsonUtil.escape(text);
+            } else if (JsonEnum.UNESCAPE.getValue().equals(type)) {
+                formattedString = GsonUtil.unescape(text);
+            } else {
+                NoticeUtil.error("正在开发中...");
+                return;
+            }
+            if ("".equals(formattedString)) {
+                return;
+            }
+            textPanel.setText(formattedString);
         } catch (Exception e) {
             System.out.println(NoticeUtil.getStackTrace(e));
-            NoticeUtil.error("JSON格式有误");
+            NoticeUtil.error("操作失败，请检查json格式");
         }
-        return str;
     }
 
     private void onCancel() {
@@ -118,9 +120,60 @@ public class FormatDialog extends JDialog {
     public static void main(String[] args) {
         FormatDialog dialog = new FormatDialog(null, null);
         dialog.setSize(870, 515);
-        dialog.setTitle("CodingEasier Format");
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
         dialog.pack();
     }
+
+    {
+// GUI initializer generated by IntelliJ IDEA GUI Designer
+// >>> IMPORTANT!! <<<
+// DO NOT EDIT OR ADD ANY CODE HERE!
+        $$$setupUI$$$();
+    }
+
+    /**
+     * Method generated by IntelliJ IDEA GUI Designer
+     * >>> IMPORTANT!! <<<
+     * DO NOT edit this method OR call it in your code!
+     *
+     * @noinspection ALL
+     */
+    private void $$$setupUI$$$() {
+        contentPanel = new JPanel();
+        contentPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new BorderLayout(0, 0));
+        contentPanel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        centerPanel = new JPanel();
+        centerPanel.setLayout(new BorderLayout(0, 0));
+        panel1.add(centerPanel, BorderLayout.CENTER);
+        final JScrollPane scrollPane1 = new JScrollPane();
+        centerPanel.add(scrollPane1, BorderLayout.CENTER);
+        textPanel = new JTextPane();
+        scrollPane1.setViewportView(textPanel);
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+        panel1.add(panel2, BorderLayout.SOUTH);
+        escapeBtn = new JButton();
+        escapeBtn.setText("转义");
+        panel2.add(escapeBtn);
+        unescapeBtn = new JButton();
+        unescapeBtn.setText("去转义");
+        panel2.add(unescapeBtn);
+        compressBtn = new JButton();
+        compressBtn.setText("压缩");
+        panel2.add(compressBtn);
+        formatBtn = new JButton();
+        formatBtn.setText("格式化");
+        panel2.add(formatBtn);
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    public JComponent $$$getRootComponent$$$() {
+        return contentPanel;
+    }
+
 }

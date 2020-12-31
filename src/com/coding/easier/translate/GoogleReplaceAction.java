@@ -1,29 +1,17 @@
 package com.coding.easier.translate;
 
 import com.coding.easier.constant.TranslateConstant;
-import com.coding.easier.ui.Popups;
 import com.coding.easier.util.NoticeUtil;
 import com.coding.easier.util.StringUtil;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.ListPopup;
 import com.intellij.openapi.ui.popup.PopupStep;
 import com.intellij.openapi.ui.popup.util.BaseListPopupStep;
 import com.intellij.openapi.util.NlsContexts;
-import com.intellij.ui.components.JBList;
-import com.intellij.ui.components.JBPanel;
-import com.intellij.ui.components.JBScrollPane;
 import org.jetbrains.annotations.Nullable;
-
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
